@@ -63,7 +63,7 @@ public class Fenetre {
 		});
 			//oBouton02
 		oBouton02.setBackground(Color.RED);
-		oBouton02.setText("WWWWWWWWWWWWW");
+		oBouton02.setText("Bouton à droite");
 		
 	}
 		
