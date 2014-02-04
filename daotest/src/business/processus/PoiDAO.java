@@ -77,8 +77,16 @@ public class PoiDAO extends DAO{
 
 	@Override
 	public List<Object> listAllObject() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Object> poi = new ArrayList<>();
+		Connection con = new CL_ConnexionBDD().createConnection();
+		Statement state = con.createStatement();
+		ResultSet rs = state.executeQuery(new MapPOI().mapListAllPOI());
+		while (rs.next()){
+			Poi tempObject = new Poi(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+			poi.add((Object)tempObject);
+		}
+		return poi;
 	}
 
 	@Override

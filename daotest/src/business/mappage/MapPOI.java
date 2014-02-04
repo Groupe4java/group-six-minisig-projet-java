@@ -14,8 +14,8 @@ public class MapPOI {
 	public String mapSelectLieu(){
 		return "";
 	}
-	public String mapListAllLieu(){
-		return "SELECT * FROM tb_lieu";
+	public String mapListAllPOI(){
+		return "SELECT * FROM tb_poi";
 	}
 
 }
