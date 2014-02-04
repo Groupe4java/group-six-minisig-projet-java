@@ -9,7 +9,7 @@ public class MapPOI {
 		return "DELETE FROM tb_poi WHERE Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ?";
 	}
 	public String mapUpdateLieu(){
-		return "UPDATE tb_lieu SET Libelle_Lieu = ?, Description_Lieu = ?, Image_Lieu = ? WHERE Libelle_Lieu = ? AND Description_Lieu = ? AND Image_Lieu = ?";
+		return "UPDATE tb_poi SET Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ? WHERE Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ?";
 	}
 	public String mapSelectLieu(){
 		return "";

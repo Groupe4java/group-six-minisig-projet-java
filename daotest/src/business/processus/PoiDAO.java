@@ -50,8 +50,28 @@ public class PoiDAO extends DAO{
 	}
 
 	@Override
-	public void updateObject(Object o, Object i) throws SQLException {
-		// TODO Auto-generated method stub
+	public void updateObject(Object input, Object output) throws SQLException {
+		
+		Connection con = new CL_ConnexionBDD().createConnection();
+		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapUpdateLieu());
+		
+		prepare.setString(1, ((Poi) output).getLibellePOI());
+		prepare.setString(2, ((Poi) output).getDescriptionPOI());
+		prepare.setInt(3, ((Poi) output).getXPOI());
+		prepare.setInt(4, ((Poi) output).getYPOI());
+		prepare.setInt(5, ((Poi) output).getNombreclicPOI());
+		prepare.setInt(6, ((Poi) output).getIdLieu());
+		
+		prepare.setString(7, ((Poi) input).getLibellePOI());
+		prepare.setString(8, ((Poi) input).getDescriptionPOI());
+		prepare.setInt(9, ((Poi) input).getXPOI());
+		prepare.setInt(10, ((Poi) input).getYPOI());
+		prepare.setInt(11, ((Poi) input).getNombreclicPOI());
+		prepare.setInt(12, ((Poi) input).getIdLieu());
+		
+		prepare.execute();
+		prepare.close();
 		
 	}
 
