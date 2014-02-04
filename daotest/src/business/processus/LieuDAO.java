@@ -2,7 +2,6 @@ package business.processus;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import dataAcess.connection.CL_ConnexionBDD;
 import business.mappage.MapLieu;
 import business.modele.Lieu;
