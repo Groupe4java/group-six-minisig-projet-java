@@ -4,9 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.mappage.MapLieu;
 import business.mappage.MapPOI;
-import business.modele.Lieu;
 import business.modele.Poi;
 import dataAcess.connection.CL_ConnexionBDD;
 
@@ -72,6 +70,7 @@ public class PoiDAO implements DAO{
 		
 		prepare.execute();
 		prepare.close();
+		state.close();
 		
 	}
 
@@ -86,6 +85,7 @@ public class PoiDAO implements DAO{
 			Poi tempObject = new Poi(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
 			poi.add((Object)tempObject);
 		}
+		state.close();
 		return poi;
 	}
 

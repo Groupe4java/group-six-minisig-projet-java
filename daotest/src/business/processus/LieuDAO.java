@@ -34,6 +34,7 @@ public class LieuDAO implements DAO{
 		prepare.setString(3, ((Lieu) o).getImageUrlLieu());
 		prepare.execute();
 		prepare.close();
+		state.close();
 	}
 	
 	public void updateObject(Object input, Object output) throws SQLException{
@@ -52,6 +53,7 @@ public class LieuDAO implements DAO{
 		
 		prepare.execute();
 		prepare.close();
+		state.close();
 		
 	}
 
