@@ -10,7 +10,7 @@ import business.modele.Lieu;
 import business.modele.Poi;
 import dataAcess.connection.CL_ConnexionBDD;
 
-public class PoiDAO extends DAO{
+public class PoiDAO implements DAO{
 
 	@Override
 	public void addObject(Object o) throws SQLException {

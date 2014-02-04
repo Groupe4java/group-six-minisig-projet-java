@@ -6,7 +6,7 @@ import dataAcess.connection.CL_ConnexionBDD;
 import business.mappage.MapParcours;
 import business.modele.Parcours;
 
-public class ParcoursDAO extends DAO{
+public class ParcoursDAO implements DAO{
 
 
 	public void addObject(Object o) throws SQLException {

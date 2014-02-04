@@ -6,7 +6,7 @@ import dataAcess.connection.CL_ConnexionBDD;
 import business.mappage.MapLieu;
 import business.modele.Lieu;
 
-public class LieuDAO extends DAO{
+public class LieuDAO implements DAO{
 
 
 	public void addObject(Object o) throws SQLException {
