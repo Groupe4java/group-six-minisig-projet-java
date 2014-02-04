@@ -15,7 +15,7 @@ public class PoiDAO implements DAO{
 		
 		Connection con = new CL_ConnexionBDD().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapAddPOi());
+		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapAddPOI());
 		
 		prepare.setString(1, ((Poi) o).getLibellePOI());
 		prepare.setString(2, ((Poi) o).getDescriptionPOI());
@@ -34,7 +34,7 @@ public class PoiDAO implements DAO{
 		
 		Connection con = new CL_ConnexionBDD().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapRemovePOi());
+		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapRemovePOI());
 		
 		prepare.setString(1, ((Poi) o).getLibellePOI());
 		prepare.setString(2, ((Poi) o).getDescriptionPOI());
@@ -52,7 +52,7 @@ public class PoiDAO implements DAO{
 		
 		Connection con = new CL_ConnexionBDD().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapUpdateLieu());
+		PreparedStatement prepare = con.prepareStatement(new MapPOI().mapUpdatePOI());
 		
 		prepare.setString(1, ((Poi) output).getLibellePOI());
 		prepare.setString(2, ((Poi) output).getDescriptionPOI());

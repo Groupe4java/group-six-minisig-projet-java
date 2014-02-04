@@ -13,6 +13,9 @@ public class MapLieu {
 	public String mapSelectLieu(){
 		return "";
 	}
+	public String mapSelectImageLieu(){
+		return "SELECT Image_Lieu FROM tb_lieu WHERE ID_Lieu = ?";
+	}
 	public String mapListAllLieu(){
 		return "SELECT * FROM tb_lieu";
 	}
