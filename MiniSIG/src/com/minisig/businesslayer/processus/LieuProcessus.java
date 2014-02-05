@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.minisig.businesslayer.table.Lieu;
+import com.minisig.businesslayer.table.Parcours;
 import com.minisig.businesslayer.dao.DAO;
 import com.minisig.businesslayer.dao.LieuDAO;
+import com.minisig.businesslayer.dao.LieuTest;
+import com.minisig.businesslayer.dao.ParcoursDAO;
+import com.minisig.businesslayer.dao.ParcoursTest;
 
 public class LieuProcessus {
 
@@ -26,16 +30,28 @@ public class LieuProcessus {
 			return null;
 		}
 	}
-//	public String getImageForLieu(int idVille){
-//		InterfaceTest dao = null;
-//		dao = new LieuDAO();
-//		try {
-//				return dao.getImageForObject(idVille);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//
-//	
-//	}
+	public List<Parcours> ListAllParcoursOfLieu(int idLieu){
+		
+		ParcoursTest daoParcours =null;
+		List<Parcours> parcours = new ArrayList<>();
+		daoParcours = new ParcoursDAO();
+		try {
+			parcours = daoParcours.ListAllParcoursOfLieu(idLieu);
+			return parcours;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public String getImageForLieu(int idVille){
+		LieuTest dao = null;
+		dao = new LieuDAO();
+		try {
+				return dao.getImageForLieu(idVille);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	
+	}
 }

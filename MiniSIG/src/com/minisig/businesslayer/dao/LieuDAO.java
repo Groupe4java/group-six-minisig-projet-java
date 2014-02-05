@@ -8,9 +8,9 @@ import com.minisig.dataaccesslayer.*;
 import com.minisig.businesslayer.sqlmap.MapLieu;
 import com.minisig.businesslayer.table.Lieu;
 
-public class LieuDAO implements DAO {
+public class LieuDAO implements DAO<Lieu>, LieuTest {
 
-	public void addObject(Object o) throws SQLException {
+	public void addObject(Lieu o) throws SQLException {
 
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -24,7 +24,7 @@ public class LieuDAO implements DAO {
 		state.close();
 	}
 
-	public void removeObject(Object o) throws SQLException {
+	public void removeObject(Lieu o) throws SQLException {
 		
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -38,7 +38,7 @@ public class LieuDAO implements DAO {
 		state.close();
 	}
 	
-	public void updateObject(Object input, Object output) throws SQLException{
+	public void updateObject(Lieu input, Lieu output) throws SQLException{
 		
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -58,15 +58,15 @@ public class LieuDAO implements DAO {
 		
 	}
 
-	public List<Object> listAllObject() throws SQLException{
+	public List<Lieu> listAllObject() throws SQLException{
 		
-		List<Object> lieus = new ArrayList<>();
+		List<Lieu> lieus = new ArrayList<>();
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement();
 		ResultSet rs = state.executeQuery(new MapLieu().mapListAllLieu());
 		while (rs.next()){
 			Lieu tempObject = new Lieu(rs.getString(2), rs.getString(3), rs.getString(4));
-			lieus.add((Object)tempObject);
+			lieus.add(tempObject);
 		}
 		return lieus;
 	}
@@ -90,7 +90,7 @@ public class LieuDAO implements DAO {
 	}
 
 	@Override
-	public Object selectObject() throws SQLException {
+	public Lieu selectObject() throws SQLException {
 		
 		int x = 0;
 		Connection con = new DataAccess().createConnection();
@@ -102,5 +102,20 @@ public class LieuDAO implements DAO {
 		prepare.close();
 		state.close();
 		return new Lieu(rs.getString(1), rs.getString(2), rs.getString(3));
+	}
+
+	@Override
+	public String getImageForLieu(int idObject) throws SQLException {
+		Connection con = new DataAccess().createConnection();
+		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapSelectImageLieu());
+		
+		prepare.setInt(1, idObject);
+
+		ResultSet rs = prepare.executeQuery();
+		prepare.close();
+		state.close();
+		
+		return rs.getString(1);
 	}
 }
