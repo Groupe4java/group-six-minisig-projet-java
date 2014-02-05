@@ -15,6 +15,6 @@ public class MapParcours {
 		return "SELECT * FROM tb_parcours";
 	}
 	public String mapListAllParcoursOfLieu(){
-		return "SELECT tb_parcours.Libelle_Parcours FROM tb_lieu INNER JOIN tb_parcours ON tb_lieu.ID_Lieu = tb_parcours.ID_Lieu WHERE tb_lieu.ID_Lieu = ?";
+		return "SELECT tb_parcours.Libelle_Parcours, tb_parcours.Description_Parcours, tb_parcours.ID_Lieu FROM tb_lieu INNER JOIN tb_parcours ON tb_lieu.ID_Lieu = tb_parcours.ID_Lieu WHERE tb_lieu.Libelle_Lieu = ?";
 	}
 }

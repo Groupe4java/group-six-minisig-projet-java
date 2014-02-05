@@ -7,5 +7,5 @@ import com.minisig.businesslayer.table.Parcours;
 
 public interface ParcoursTest {
 
-	abstract public List<Parcours> ListAllParcoursOfLieu(int idObject) throws SQLException;
+	abstract public List<Parcours> ListAllParcoursOfLieu(String nameObject) throws SQLException;
 }

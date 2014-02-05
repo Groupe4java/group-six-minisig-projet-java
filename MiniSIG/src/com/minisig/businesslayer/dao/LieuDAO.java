@@ -105,12 +105,12 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	}
 
 	@Override
-	public String getImageForLieu(int idObject) throws SQLException {
+	public String getImageForLieu(String nameObject) throws SQLException {
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapSelectImageLieu());
 		
-		prepare.setInt(1, idObject);
+		prepare.setString(1, nameObject);
 
 		ResultSet rs = prepare.executeQuery();
 		prepare.close();

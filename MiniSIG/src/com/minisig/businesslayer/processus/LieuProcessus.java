@@ -4,14 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.minisig.businesslayer.table.Lieu;
-import com.minisig.businesslayer.table.Parcours;
-import com.minisig.businesslayer.dao.DAO;
-import com.minisig.businesslayer.dao.LieuDAO;
-import com.minisig.businesslayer.dao.LieuTest;
-import com.minisig.businesslayer.dao.ParcoursDAO;
-import com.minisig.businesslayer.dao.ParcoursTest;
-
+import com.minisig.businesslayer.table.*;
+import com.minisig.businesslayer.dao.*;
 public class LieuProcessus {
 
 	public List<Lieu> ListAllLieu(){
@@ -30,28 +24,33 @@ public class LieuProcessus {
 			return null;
 		}
 	}
-	public List<Parcours> ListAllParcoursOfLieu(int idLieu){
+	public List<Parcours> ListAllParcoursOfLieu(String nameLieu){
 		
 		ParcoursTest daoParcours =null;
 		List<Parcours> parcours = new ArrayList<>();
 		daoParcours = new ParcoursDAO();
 		try {
-			parcours = daoParcours.ListAllParcoursOfLieu(idLieu);
+			parcours = daoParcours.ListAllParcoursOfLieu(nameLieu);
 			return parcours;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
-	public String getImageForLieu(int idVille){
+	public String getImageForLieu(String libelleVille){
 		LieuTest dao = null;
 		dao = new LieuDAO();
 		try {
-				return dao.getImageForLieu(idVille);
+				return dao.getImageForLieu(libelleVille);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
 	
+	}
+	public List<Poi> ListAllPoiOfLieu(){
+		
+		return null;
 	}
 }

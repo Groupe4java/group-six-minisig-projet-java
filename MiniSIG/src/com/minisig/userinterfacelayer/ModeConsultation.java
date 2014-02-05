@@ -30,9 +30,9 @@ import java.awt.GridLayout;
 
 import javax.swing.SwingConstants;
 
-import com.minisig.businesslayer.processus.LieuProcessus;
-import com.minisig.businesslayer.table.Lieu;
-import com.minisig.businesslayer.table.Parcours;
+import com.minisig.businesslayer.processus.*;
+import com.minisig.businesslayer.table.*;
+
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -152,7 +152,7 @@ public class ModeConsultation extends JFrame {
 				try 
 				{
 					//Création de l'objet Image
-				Image img = ImageIO.read(new File("D:\\Users\\Gaëtan\\Pictures\\map.png"));
+				Image img = ImageIO.read(new File("C:\\Users\\Luc\\Desktop\\stationnement-payant-paris.jpg"));
 					//Draw l'image avec comme taille, la taille du panel
 				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 				} 
@@ -188,7 +188,8 @@ public class ModeConsultation extends JFrame {
 		panelNorth.add(panelMenu, BorderLayout.SOUTH);
 		
 		comboBoxLieu = new JComboBox();
-		comboBoxLieu.setModel(new DefaultComboBoxModel(new String[] {"Paris", "Marraqu\u00E8che", "Alger"}));
+		comboBoxLieu.setModel(new DefaultComboBoxModel());
+		comboBoxLieu.addItem("Choisir Lieu");
 		panelMenu.add(comboBoxLieu);
 		FillcomboBoxLieu(comboBoxLieu);
 		
@@ -198,7 +199,7 @@ public class ModeConsultation extends JFrame {
 		panelMenu.add(btnGoLieu);
 		
 		comboBoxParcours = new JComboBox();
-		comboBoxParcours.setModel(new DefaultComboBoxModel(new String[] {"Maisons \u00E0 paris"}));
+		comboBoxParcours.setModel(new DefaultComboBoxModel());
 		comboBoxParcours.setEnabled(false);
 		panelMenu.add(comboBoxParcours);
 		
@@ -213,13 +214,26 @@ public class ModeConsultation extends JFrame {
 		lieus = li.ListAllLieu();
 		for(Lieu e : lieus){
 			comboBoxLieu.addItem(e.getNameLieu());
+			
 		}
 	}
-	public void FillcomboBoxParcours(JComboBox comboBoxLieu, int id){
+	public void FillcomboBoxParcours(JComboBox comboBoxParcours, String nameLieu){
 		List<Parcours> parcours = null;
 		LieuProcessus li = new LieuProcessus();
-		parcours = li.ListAllParcoursOfLieu(id);
-		for(Parcours e: parcours) comboBoxLieu.addItem(e.getLibelleParcours());
+		parcours = li.ListAllParcoursOfLieu(nameLieu);
+		for(Parcours e: parcours) comboBoxParcours.addItem(e.getLibelleParcours());
+	}
+	public void FillPoiIn(String nameLieu){
+		List<Poi> pois = null;
+		PoiProcessus li = new PoiProcessus();
+		pois = li.listAllPoiForLieu(nameLieu);
+		// Renvoie List avec tout les object POI du lieu
+	}
+	public void FillPoiInParcours(String nameParcours){
+		List<Poi> pois = null;
+		PoiProcessus li = new PoiProcessus();
+		pois = li.listAllPoiForParcours(nameParcours);
+		//Renvoie List avec tout les object Poi du parcours
 	}
 	public void newListeners()
 	{
@@ -227,9 +241,10 @@ public class ModeConsultation extends JFrame {
 		//ComboBoxLieu
 		comboBoxLieu.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
-				lieuSelected = true;
+					lieuSelected = true;
 				System.out.println(lieuSelected);
-				btnGoLieu.setEnabled(true);
+				if(comboBoxLieu.getSelectedItem().toString() != "Choisir Lieu")btnGoLieu.setEnabled(true);
+				else btnGoLieu.setEnabled(false);
 			}
 		});
 		
@@ -243,7 +258,10 @@ public class ModeConsultation extends JFrame {
 		//Bouton Go Lieu
 		btnGoLieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				comboBoxParcours.removeAllItems();
+				FillcomboBoxParcours(comboBoxParcours, comboBoxLieu.getSelectedItem().toString());
 				comboBoxParcours.setEnabled(true);
+
 			}
 		});
 		//Bouton Go Parcours

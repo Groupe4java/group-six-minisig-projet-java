@@ -4,5 +4,5 @@ import java.sql.SQLException;
 
 public interface LieuTest {
 
-	abstract public String getImageForLieu(int idObject) throws SQLException;
+	abstract public String getImageForLieu(String nameObject) throws SQLException;
 }

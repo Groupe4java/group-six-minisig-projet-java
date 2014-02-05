@@ -82,15 +82,15 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 	}
 
 
-	public List<Parcours> ListAllParcoursOfLieu(int idObject) throws SQLException {
+	public List<Parcours> ListAllParcoursOfLieu(String nameLieu) throws SQLException {
 		List<Parcours> parcours = new ArrayList<>();
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement();
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapListAllParcoursOfLieu());
-		prepare.setInt(1, idObject);
+		prepare.setString(1, nameLieu);
 		ResultSet rs = prepare.executeQuery();
 		while(rs.next()){
-			Parcours tempParcours = new Parcours(rs.getString(2), rs.getString(3), rs.getInt(4));
+			Parcours tempParcours = new Parcours(rs.getString(1), rs.getString(2), rs.getInt(3));
 			parcours.add(tempParcours);
 		}
 		
