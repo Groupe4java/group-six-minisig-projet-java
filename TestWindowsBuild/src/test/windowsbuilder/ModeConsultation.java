@@ -2,15 +2,21 @@ package test.windowsbuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -18,32 +24,27 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.GridLayout;
-
-import javax.swing.SwingConstants;
-
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ModeConsultation extends JFrame {
 
 	private JPanel contentPane;
-	JPanel panelMAP;
+	private JPanel panelMAP;
 	JComboBox comboBoxLieu;
 	JComboBox comboBoxParcours;
 	JButton btnGoLieu;
 	JButton btnGoParcours;
 	JButton btnPrevious;
 	JButton btnNext;
+	int originWidht = 512;
+	int originHeight = 408;
+	int widthPanelMap;
+	int heightPanelMap;
+	MyJPanelMap oClassPanelMap = new MyJPanelMap();
+	
+	Image img;
 	
 	boolean lieuSelected = false;
 	boolean parcoursSelected = false;
@@ -68,6 +69,7 @@ public class ModeConsultation extends JFrame {
 		newListeners();
 	}
 	
+
 	public void newComponents()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -136,32 +138,10 @@ public class ModeConsultation extends JFrame {
 		Component verticalStrut = Box.createVerticalStrut(20);
 		panelPoiSOUTH.add(verticalStrut);
 		
-		panelMAP = new JPanel()
-		{
-			//Taille d'origine de la carte.
-			int originWidht = 512;
-			int originHeight = 408;
-			
-			//PARTIE DRAW
-			public void paintComponent(Graphics g){
-				try 
-				{
-					//Création de l'objet Image
-				Image img = ImageIO.read(new File("D:\\Users\\Gaëtan\\Pictures\\map.png"));
-					//Draw l'image avec comme taille, la taille du panel
-				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-				} 
-				catch (IOException e) 
-				{
-				e.printStackTrace();
-				}
-				
-				//Draw un rond (position X, position Y, largeur, hauteur);
-				g.fillOval(300 * getWidth()/originWidht, 300 * getHeight()/originHeight, 10, 10);
-			}
-		};
 		
 		
+		panelMAP = new MyJPanelMap();
+
 		panelMAP.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelCenter.add(panelMAP, BorderLayout.CENTER);
 		
@@ -199,6 +179,7 @@ public class ModeConsultation extends JFrame {
 		btnGoParcours = new JButton("Go");
 		
 		panelMenu.add(btnGoParcours);
+		System.out.println("FIN NEW COMPONENTS");
 	}
 	
 	public void newListeners()
@@ -224,6 +205,14 @@ public class ModeConsultation extends JFrame {
 		btnGoLieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBoxParcours.setEnabled(true);
+				int nombrePOI = 1;
+				int x1 = 300;
+				int x2 = 300;
+				oClassPanelMap.setNombrePOI(nombrePOI);
+				for(int i = 0; i <= nombrePOI; i++)
+				{
+					oClassPanelMap.setPositionPOI(i, x1, x2);
+				}
 			}
 		});
 		//Bouton Go Parcours
@@ -246,11 +235,22 @@ public class ModeConsultation extends JFrame {
 		
 	//LISTENERS - MouseClicked on MAP
 		panelMAP.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("X = "+arg0.getX());
-				System.out.println("y = "+arg0.getY());
-				arg0.getX();
+			public void mouseClicked(MouseEvent e) {
+//				double ratioX = (double) ((MyJPanelMap) panelMAP).getWidthPanelMap()/originWidht;
+//				double ratioY = (double) ((MyJPanelMap) panelMAP).getHeightPanelMap()/originHeight;
+//				
+//				double newX = e.getX() / ratioX;
+//				double newY = e.getY() / ratioY;
+//				
+//				//((MyJPanelMap) panelMAP).getHeightPanelMap();
+//				System.out.println("widthPanelMap = "+widthPanelMap);
+//				System.out.println("originWidht = "+originWidht);
+//				System.out.println("ratio = "+ratioX);
+//				System.out.println("newX = "+(int)newX+" : ");
+//				
+//				((MyJPanelMap) panelMAP).setPositionMouse((int)newX, (int) newY);
+//				//panelMAP.paintComponents(getGraphics());
+//				repaint();s
 			}
 		});
 		
