@@ -17,23 +17,38 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
 import java.awt.Component;
+
 import javax.swing.Box;
+
 import java.awt.GridLayout;
+
 import javax.swing.SwingConstants;
+
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ModeConsultation extends JFrame {
 
 	private JPanel contentPane;
+	JPanel panelMAP;
+	JComboBox comboBoxLieu;
+	JComboBox comboBoxParcours;
+	JButton btnGoLieu;
+	JButton btnGoParcours;
+	JButton btnPrevious;
+	JButton btnNext;
 	
+	boolean lieuSelected = false;
+	boolean parcoursSelected = false;
 	
-	/**
-	 * Launch the application.
-	 */
+	//Fonction main
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,10 +62,14 @@ public class ModeConsultation extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Constructeur
 	public ModeConsultation() {
+		newComponents();
+		newListeners();
+	}
+	
+	public void newComponents()
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 520);
 		contentPane = new JPanel();
@@ -80,10 +99,12 @@ public class ModeConsultation extends JFrame {
 		JPanel panelNavigate = new JPanel();
 		panelPoiNORTH.add(panelNavigate);
 		
-		JButton btnPrevious = new JButton("<");
+		btnPrevious = new JButton("<");
+		
 		panelNavigate.add(btnPrevious);
 		
-		JButton btnNext = new JButton(">");
+		btnNext = new JButton(">");
+		
 		panelNavigate.add(btnNext);
 		
 		JPanel panelPoiCENTER = new JPanel();
@@ -115,7 +136,7 @@ public class ModeConsultation extends JFrame {
 		Component verticalStrut = Box.createVerticalStrut(20);
 		panelPoiSOUTH.add(verticalStrut);
 		
-		JPanel panelMAP = new JPanel()
+		panelMAP = new JPanel()
 		{
 			//Taille d'origine de la carte.
 			int originWidht = 512;
@@ -139,6 +160,8 @@ public class ModeConsultation extends JFrame {
 				g.fillOval(300 * getWidth()/originWidht, 300 * getHeight()/originHeight, 10, 10);
 			}
 		};
+		
+		
 		panelMAP.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelCenter.add(panelMAP, BorderLayout.CENTER);
 		
@@ -159,18 +182,77 @@ public class ModeConsultation extends JFrame {
 		JPanel panelMenu = new JPanel();
 		panelNorth.add(panelMenu, BorderLayout.SOUTH);
 		
-		JComboBox comboBoxLieu = new JComboBox();
+		comboBoxLieu = new JComboBox();
 		comboBoxLieu.setModel(new DefaultComboBoxModel(new String[] {"Paris", "Marraqu\u00E8che", "Alger"}));
 		panelMenu.add(comboBoxLieu);
 		
-		JButton btnGoLieu = new JButton("Go");
+		btnGoLieu = new JButton("Go");
+		
+		btnGoLieu.setEnabled(false);
 		panelMenu.add(btnGoLieu);
 		
-		JComboBox comboBoxParcours = new JComboBox();
+		comboBoxParcours = new JComboBox();
 		comboBoxParcours.setModel(new DefaultComboBoxModel(new String[] {"Maisons \u00E0 paris"}));
+		comboBoxParcours.setEnabled(false);
 		panelMenu.add(comboBoxParcours);
 		
-		JButton btnGoParcours = new JButton("Go");
+		btnGoParcours = new JButton("Go");
+		
 		panelMenu.add(btnGoParcours);
+	}
+	
+	public void newListeners()
+	{
+	//LISTENERS - ItemStateChanged
+		//ComboBoxLieu
+		comboBoxLieu.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				lieuSelected = true;
+				System.out.println(lieuSelected);
+				btnGoLieu.setEnabled(true);
+			}
+		});
+		
+		//ComboBoxParcours
+		comboBoxParcours.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+			}
+		});
+		
+	//LISTENERS - ActionPerformed (Bouton)
+		//Bouton Go Lieu
+		btnGoLieu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				comboBoxParcours.setEnabled(true);
+			}
+		});
+		//Bouton Go Parcours
+		btnGoParcours.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		//Bouton Flèche Précédent POI
+		btnPrevious.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		//Bouton Flèche Suivant POI
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+	//LISTENERS - MouseClicked on MAP
+		panelMAP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("X = "+arg0.getX());
+				System.out.println("y = "+arg0.getY());
+				arg0.getX();
+			}
+		});
+		
 	}
 }
