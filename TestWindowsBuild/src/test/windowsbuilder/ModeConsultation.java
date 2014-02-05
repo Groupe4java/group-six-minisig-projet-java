@@ -71,20 +71,20 @@ public class ModeConsultation extends JFrame {
 		panelPOI.add(panelPoiNORTH, BorderLayout.NORTH);
 		panelPoiNORTH.setLayout(new BoxLayout(panelPoiNORTH, BoxLayout.PAGE_AXIS));
 		
-		JPanel panel = new JPanel();
-		panelPoiNORTH.add(panel);
+		JPanel panelPusher = new JPanel();
+		panelPoiNORTH.add(panelPusher);
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(150);
-		panel.add(horizontalStrut_1);
+		panelPusher.add(horizontalStrut_1);
 		
-		JPanel panel_1 = new JPanel();
-		panelPoiNORTH.add(panel_1);
+		JPanel panelNavigate = new JPanel();
+		panelPoiNORTH.add(panelNavigate);
 		
 		JButton btnPrevious = new JButton("<");
-		panel_1.add(btnPrevious);
+		panelNavigate.add(btnPrevious);
 		
 		JButton btnNext = new JButton(">");
-		panel_1.add(btnNext);
+		panelNavigate.add(btnNext);
 		
 		JPanel panelPoiCENTER = new JPanel();
 		panelPOI.add(panelPoiCENTER, BorderLayout.CENTER);
