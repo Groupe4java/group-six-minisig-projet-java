@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +12,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -42,7 +42,8 @@ public class ModeConsultation extends JFrame {
 	int originHeight = 408;
 	int widthPanelMap;
 	int heightPanelMap;
-	MyJPanelMap oClassPanelMap = new MyJPanelMap();
+	
+	ArrayList<Boolean> listPopUpOn;
 	
 	Image img;
 	
@@ -141,6 +142,7 @@ public class ModeConsultation extends JFrame {
 		
 		
 		panelMAP = new MyJPanelMap();
+		
 
 		panelMAP.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelCenter.add(panelMAP, BorderLayout.CENTER);
@@ -179,7 +181,6 @@ public class ModeConsultation extends JFrame {
 		btnGoParcours = new JButton("Go");
 		
 		panelMenu.add(btnGoParcours);
-		System.out.println("FIN NEW COMPONENTS");
 	}
 	
 	public void newListeners()
@@ -189,7 +190,6 @@ public class ModeConsultation extends JFrame {
 		comboBoxLieu.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				lieuSelected = true;
-				System.out.println(lieuSelected);
 				btnGoLieu.setEnabled(true);
 			}
 		});
@@ -205,14 +205,38 @@ public class ModeConsultation extends JFrame {
 		btnGoLieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBoxParcours.setEnabled(true);
-				int nombrePOI = 1;
-				int x1 = 300;
-				int x2 = 300;
-				oClassPanelMap.setNombrePOI(nombrePOI);
-				for(int i = 0; i <= nombrePOI; i++)
+				ArrayList<Integer> listX = new ArrayList<>();
+				ArrayList<Integer> listY = new ArrayList<>();
+				ArrayList<Boolean> listIsInParcours = new ArrayList<>();
+				ArrayList<Boolean> listPopUpOn = new ArrayList<>();
+				
+				
+				listX.add(300);
+				listY.add(300);
+				listIsInParcours.add(false);
+				listPopUpOn.add(false);
+				
+				listX.add(200);
+				listY.add(200);
+				listIsInParcours.add(false);
+				listPopUpOn.add(false);
+				
+				listX.size();
+				((MyJPanelMap) panelMAP).removeArrayList(); 			//VIDE L'ARRAYLIST DE MyJPANELMAP
+				((MyJPanelMap) panelMAP).setBoutonGoLieuClicked(true); 	//SET BOUTONGOLIEUCLICKED TO TRUE
+				((MyJPanelMap) panelMAP).setNombrePOI(listX.size());	//ENVOI LE NOMBRE DE POI, GRACE A SIZE()
+				
+				for(int i = 0; i < listX.size(); i++)
 				{
-					oClassPanelMap.setPositionPOI(i, x1, x2);
+					//REMPLISSAGE DE L'ARRAYLIST DE MyJPANELMAP
+					//((MyJPanelMap) panelMAP).addListPopUpOn(listPopUpOn.get(i));
+					System.out.println("TEST5");
+					((MyJPanelMap) panelMAP).setArrayPositionPOI(listX.get(i), listY.get(i), listIsInParcours.get(i));
+					System.out.println("TEST6");
 				}
+				System.out.println("TEST7");
+				repaint();
+				System.out.println("TEST8");
 			}
 		});
 		//Bouton Go Parcours
@@ -236,6 +260,20 @@ public class ModeConsultation extends JFrame {
 	//LISTENERS - MouseClicked on MAP
 		panelMAP.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ArrayList<Ellipse2D> listOval = new ArrayList<>();
+				listOval = ((MyJPanelMap) panelMAP).getListOval();
+				
+
+				for(int i = 0; i < listOval.size(); i++)
+				{
+					if ((e.getButton() == 1) && listOval.get(i).contains(e.getX(), e.getY()))
+					{
+						//((MyJPanelMap) panelMAP).setListPopUpOn(i, changeBoolean(listPopUpOn.get(i)));
+						System.out.println("YO");
+					}
+				}
+				
+				
 //				double ratioX = (double) ((MyJPanelMap) panelMAP).getWidthPanelMap()/originWidht;
 //				double ratioY = (double) ((MyJPanelMap) panelMAP).getHeightPanelMap()/originHeight;
 //				
@@ -254,5 +292,12 @@ public class ModeConsultation extends JFrame {
 			}
 		});
 		
+	//LISTENERS - MouseMotion on MAP
+		panelMAP.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent arg0) {
+				
+			}
+		});
 	}
 }
