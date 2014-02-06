@@ -36,6 +36,10 @@ public class ModeConsultation extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panelMAP;
+	JPanel panelTitle;
+	JPanel panelDescription;
+	JLabel lblTitre;
+	JLabel lblDescription;
 	JComboBox comboBoxLieu;
 	JComboBox comboBoxParcours;
 	JButton btnGoLieu;
@@ -47,7 +51,20 @@ public class ModeConsultation extends JFrame {
 	int widthPanelMap;
 	int heightPanelMap;
 	
+	boolean boutonParcoursClicked;
+	ArrayList<Integer> listX;
+	ArrayList<Integer> listY;
+	
+	ArrayList<Integer> listIdPOI;
+	ArrayList<String> listNamePoi;
+	ArrayList<String> listDescriptionPoi;
+	ArrayList<Boolean> listIsInParcours;
 	ArrayList<Boolean> listPopUpOn;
+	
+	List<Poi> listPOI;
+	PoiProcessus poiProc;
+	LieuProcessus lieuProc;
+	ParcoursProcessus parcoursProc;
 	
 	Image img;
 	
@@ -70,6 +87,7 @@ public class ModeConsultation extends JFrame {
 
 	//Constructeur
 	public ModeConsultation() {
+		panelMAP = new MyJPanelMap();
 		newComponents();
 		newListeners();
 	}
@@ -118,18 +136,18 @@ public class ModeConsultation extends JFrame {
 		panelPOI.add(panelPoiCENTER, BorderLayout.CENTER);
 		panelPoiCENTER.setLayout(new BoxLayout(panelPoiCENTER, BoxLayout.PAGE_AXIS));
 		
-		JPanel panelTitle = new JPanel();
+		panelTitle = new JPanel();
 		panelPoiCENTER.add(panelTitle);
 		
-		JLabel lblTitre = new JLabel("Titre");
+		lblTitre = new JLabel("Titre");
 		lblTitre.setVerticalAlignment(SwingConstants.TOP);
 		lblTitre.setHorizontalAlignment(SwingConstants.LEFT);
 		panelTitle.add(lblTitre);
 		
-		JPanel panelDescription = new JPanel();
+		panelDescription = new JPanel();
 		panelPoiCENTER.add(panelDescription);
 		
-		JLabel lblDescription = new JLabel("Description");
+		lblDescription = new JLabel("Description");
 		lblDescription.setVerticalAlignment(SwingConstants.TOP);
 		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		panelDescription.add(lblDescription);
@@ -145,7 +163,7 @@ public class ModeConsultation extends JFrame {
 		
 		
 		
-		panelMAP = new MyJPanelMap();
+		
 		
 
 		panelMAP.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -194,6 +212,63 @@ public class ModeConsultation extends JFrame {
 		panelMenu.add(btnGoParcours);
 	}
 	
+	public void afficherPOI()
+	{
+		
+		listX = new ArrayList<>();
+		listY = new ArrayList<>();
+		listIsInParcours = new ArrayList<>();
+		listPopUpOn = new ArrayList<>();
+		listIdPOI = new ArrayList<>();
+		listNamePoi = new ArrayList<>();
+		listDescriptionPoi = new ArrayList<>();
+		
+		listPOI = null;
+		poiProc = new PoiProcessus();
+		lieuProc = new LieuProcessus();
+
+		parcoursProc = new ParcoursProcessus();
+		listPOI = poiProc.listAllPoiForLieu(lieuProc.getIdForNameLieu(comboBoxLieu.getSelectedItem().toString()));
+		
+		for(Poi p: listPOI){
+
+			listX.add(p.getXPOI());
+			listY.add(p.getYPOI());
+			listIdPOI.add(p.getIdPOI());
+			listNamePoi.add(p.getLibellePOI());
+			listDescriptionPoi.add(p.getDescriptionPOI());
+			
+			if(boutonParcoursClicked)
+			{
+
+				int parcoursId = parcoursProc.getIdForNameParcours(comboBoxParcours.getSelectedItem().toString());
+				int poiId = p.getIdPOI();
+				if (poiProc.checkPoiForParcours(parcoursId, poiId)) //SELECT * FROM fait_partie WHERE ID_Parcours = ? AND ID_POI = ?
+				{
+					listIsInParcours.add(true);
+				}
+				else {
+					listIsInParcours.add(false);
+				}
+			}
+			else {
+				listIsInParcours.add(false);
+			}
+		}
+
+		listX.size();
+		((MyJPanelMap) panelMAP).removeArrayList(); 			//VIDE L'ARRAYLIST DE MyJPANELMAP
+		((MyJPanelMap) panelMAP).setBoutonGoLieuClicked(true); 	//SET BOUTONGOLIEUCLICKED TO TRUE
+		((MyJPanelMap) panelMAP).setNombrePOI(listX.size());	//ENVOI LE NOMBRE DE POI, GRACE A SIZE()
+		
+		for(int i = 0; i < listX.size(); i++)
+		{
+			//REMPLISSAGE DE L'ARRAYLIST DE MyJPANELMAP
+			((MyJPanelMap) panelMAP).setArrayPositionPOI(listX.get(i), listY.get(i), listIsInParcours.get(i));
+		}
+		repaint();
+	}
+	
 	public void newListeners()
 	{
 	//LISTENERS - ItemStateChanged
@@ -216,37 +291,9 @@ public class ModeConsultation extends JFrame {
 		btnGoLieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBoxParcours.setEnabled(true);
-				ArrayList<Integer> listX = new ArrayList<>();
-				ArrayList<Integer> listY = new ArrayList<>();
-				ArrayList<Boolean> listIsInParcours = new ArrayList<>();
-				ArrayList<Boolean> listPopUpOn = new ArrayList<>();
+				boutonParcoursClicked = false;
+				afficherPOI();
 				
-				List<Poi> listPOI = null;
-				PoiProcessus poiProc = new PoiProcessus();
-				LieuProcessus lieuProc = new LieuProcessus();
-				//int tempObject = lieuProc.getIdForNameLieu(comboBoxLieu.getSelectedItem().toString());
-				listPOI = poiProc.listAllPoiForLieu(lieuProc.getIdForNameLieu(comboBoxLieu.getSelectedItem().toString()));
-				
-				for(Poi p: listPOI){
-
-					listX.add(p.getXPOI());
-					listY.add(p.getXPOI());
-					//if( methodeQuiVerifie si p.getIdPOI())
-					listIsInParcours.add(false);
-				}
-
-				listX.size();
-				((MyJPanelMap) panelMAP).removeArrayList(); 			//VIDE L'ARRAYLIST DE MyJPANELMAP
-				((MyJPanelMap) panelMAP).setBoutonGoLieuClicked(true); 	//SET BOUTONGOLIEUCLICKED TO TRUE
-				((MyJPanelMap) panelMAP).setNombrePOI(listX.size());	//ENVOI LE NOMBRE DE POI, GRACE A SIZE()
-				
-				for(int i = 0; i < listX.size(); i++)
-				{
-					//REMPLISSAGE DE L'ARRAYLIST DE MyJPANELMAP
-					//((MyJPanelMap) panelMAP).addListPopUpOn(listPopUpOn.get(i));
-					((MyJPanelMap) panelMAP).setArrayPositionPOI(listX.get(i), listY.get(i), listIsInParcours.get(i));
-				}
-				repaint();
 				comboBoxParcours.removeAllItems();
 				List<Parcours> listParcours = null;
 				listParcours = lieuProc.ListAllParcoursOfLieu(comboBoxLieu.getSelectedItem().toString());
@@ -258,6 +305,8 @@ public class ModeConsultation extends JFrame {
 		//Bouton Go Parcours
 		btnGoParcours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				boutonParcoursClicked = true;
+				afficherPOI();
 			}
 		});
 		
@@ -280,12 +329,17 @@ public class ModeConsultation extends JFrame {
 				listOval = ((MyJPanelMap) panelMAP).getListOval();
 				
 
-				for(int i = 0; i < listOval.size(); i++)
+				for(int i = 0; i < listX.size(); i++)
 				{
 					if ((e.getButton() == 1) && listOval.get(i).contains(e.getX(), e.getY()))
 					{
+//						listIdPOI.get(i);
+//						listNamePoi.get(i);
+//						listDescriptionPoi.get(i);
 						//((MyJPanelMap) panelMAP).setListPopUpOn(i, changeBoolean(listPopUpOn.get(i)));
 						System.out.println("YO");
+						lblTitre.setText(listNamePoi.get(i));
+						lblDescription.setText(listDescriptionPoi.get(i));
 					}
 				}
 				

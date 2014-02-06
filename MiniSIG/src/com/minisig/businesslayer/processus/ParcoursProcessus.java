@@ -1,10 +1,10 @@
 package com.minisig.businesslayer.processus;
-import com.minisig.businesslayer.dao.*;
-import com.minisig.businesslayer.table.*;
-
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.minisig.businesslayer.table.*;
+import com.minisig.businesslayer.dao.*;
 
 public class ParcoursProcessus {
 
@@ -29,6 +29,7 @@ public class ParcoursProcessus {
 		ParcoursTest dao = null;
 		dao = new ParcoursDAO();
 		try {
+			
 			tempInt = dao.getIdForNameParcours(libelleParcours);
 			return tempInt;
 		} catch (SQLException e) {

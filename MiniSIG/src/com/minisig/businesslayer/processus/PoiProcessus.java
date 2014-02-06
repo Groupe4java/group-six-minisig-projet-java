@@ -22,17 +22,17 @@ public class PoiProcessus {
 		}
 	}
 	
-	public List<Poi> listAllPoiForParcours(int idParcours){
-		List<Poi> pois = new ArrayList<>();
+	public boolean checkPoiForParcours(int idParcours, int idPoi){
+		boolean exist;
 		PoiTest dao = null;
 		dao = new PoiDAO();
 		try{
-			pois = dao.ListAllPoiOfParcours(idParcours);
-			return pois;
+			exist = dao.checkPoiIntoParcours(idParcours, idPoi);
+			return exist;
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 	}
 	public void addListPoiForParcours(String lieu){
@@ -44,7 +44,6 @@ public class PoiProcessus {
 	public void addPoi(String namePoi, String descriptionPoi, int xPos, int yPos, int nbClic, int idLieu){
 		DAO dao=null;
 		dao = new PoiDAO();
-		
 		Poi p = new Poi(namePoi, descriptionPoi, xPos, yPos, nbClic, idLieu);
 		try{
 			dao.addObject(p);
@@ -53,11 +52,11 @@ public class PoiProcessus {
 			e.printStackTrace();
 		}
 	}
-	public void removePoi(String namePoi, String descriptionPoi, int xPos, int yPos, int nbClic, int idLieu){
+	public void removePoi(int idPoi, String namePoi, String descriptionPoi, int xPos, int yPos, int nbClic, int idLieu){
 		DAO dao=null;
 		dao = new PoiDAO();
 		
-		Poi p = new Poi(namePoi, descriptionPoi, xPos, yPos, nbClic, idLieu);
+		Poi p = new Poi(idPoi, namePoi, descriptionPoi, xPos, yPos, nbClic, idLieu);
 		try{
 			dao.removeObject(p);
 		}

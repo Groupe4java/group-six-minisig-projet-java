@@ -51,8 +51,19 @@ public class Poi {
 	public void setIdLieu(int idLieu) {
 		this.idLieu = idLieu;
 	}
+	public Poi(int idPoi, String libellePOI, String descriptionPOI, int xPOI, int yPOI,
+			int nombreclicPOI, int idLieu) {
+		this.idPOI = idPoi;
+		this.libellePOI = libellePOI;
+		this.descriptionPOI = descriptionPOI;
+		this.xPOI = xPOI;
+		this.yPOI = yPOI;
+		this.nombreclicPOI = nombreclicPOI;
+		this.idLieu = idLieu;
+	}
 	public Poi(String libellePOI, String descriptionPOI, int xPOI, int yPOI,
 			int nombreclicPOI, int idLieu) {
+	
 		this.libellePOI = libellePOI;
 		this.descriptionPOI = descriptionPOI;
 		this.xPOI = xPOI;

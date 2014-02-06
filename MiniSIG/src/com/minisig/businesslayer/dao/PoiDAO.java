@@ -85,7 +85,7 @@ public Poi selectObject() throws SQLException {
 		Statement state = con.createStatement();
 		ResultSet rs = state.executeQuery(new MapPoi().mapListAllPoiOfLieu());
 		while (rs.next()){
-			Poi tempObject = new Poi(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+			Poi tempObject = new Poi(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
 			poi.add(tempObject);
 		}
 		state.close();
@@ -108,7 +108,7 @@ public Poi selectObject() throws SQLException {
 		prepare.setInt(1, idLieu);	
 		ResultSet rs = prepare.executeQuery();	
 		while (rs.next()){
-			Poi tempObject = new Poi(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+			Poi tempObject = new Poi(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
 			poi.add(tempObject);
 		}
 		state.close();
@@ -116,18 +116,20 @@ public Poi selectObject() throws SQLException {
 	}
 
 	@Override
-	public List<Poi> ListAllPoiOfParcours(int idParcours) throws SQLException {
-		List<Poi> poi = new ArrayList<>();
+	public boolean checkPoiIntoParcours(int idParcours, int idPoi) throws SQLException {
+		
+		boolean hasRows = false;
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapListAllPoiOfLieu());
-		prepare.setInt(1, idParcours);		
+		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapGetExistencePoiInParcours());
+		prepare.setInt(1, idParcours);	
+		prepare.setInt(2, idPoi);
 		ResultSet rs = prepare.executeQuery();	
-		while (rs.next()){
-			Poi tempObject = new Poi(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
-			poi.add(tempObject);
+		while(rs.next()){
+			hasRows = true;
 		}
+		prepare.close();
 		state.close();
-		return poi;
+		return hasRows;
 	}
 }

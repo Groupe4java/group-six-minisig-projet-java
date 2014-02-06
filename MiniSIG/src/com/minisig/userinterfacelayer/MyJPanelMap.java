@@ -65,12 +65,18 @@ public class MyJPanelMap extends JPanel {
 	{
 		listX.removeAll(listX);
 		listY.removeAll(listY);
+		listIsInParcours.removeAll(listIsInParcours);
 	}
 	
 	public void setArrayPositionPOI(int newX, int newY, boolean isInParcours)
 	{
 		listX.add(newX);
 		listY.add(newY);
+		listIsInParcours.add(isInParcours);
+	}
+	
+	public void setIsInParcours(boolean isInParcours)
+	{
 		listIsInParcours.add(isInParcours);
 	}
 	
@@ -118,11 +124,8 @@ public class MyJPanelMap extends JPanel {
 			for(int i = 0; i < listX.size() ; i++)
 			{
 				if(listIsInParcours.get(i)){g.setColor(Color.red);}
-				else{g.setColor(Color.red);}
-				//if(listPopUpOn.get(i))
-				//{
-				//	g2d.drawString("Yooooooooooo", listX.get(i) * getWidth()/originWidht, listY.get(i) * getHeight()/originHeight);
-				//}
+				else{g.setColor(Color.blue);}
+
 				oval = new Ellipse2D.Double(listX.get(i) * getWidth()/originWidht, listY.get(i) * getHeight()/originHeight, 20, 20);
 				g2d.fill(oval);
 				listOval.add(oval);

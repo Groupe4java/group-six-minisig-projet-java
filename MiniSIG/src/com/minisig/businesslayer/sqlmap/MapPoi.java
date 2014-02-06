@@ -17,7 +17,7 @@ public class MapPoi {
 	public String mapListAllPoiOfLieu(){
 		return "SELECT * FROM `tb_poi` WHERE ID_Lieu = ?";
 	}
-	public String mapListAllPoiOfParcours(){
-		return "SELECT tb_poi.* FROM tb_poi INNER JOIN fait_partie ON tb_poi.ID_POI = fait_partie.ID_POI WHERE fait_partie.ID_Parcours = ?";
+	public String mapGetExistencePoiInParcours(){
+		return "SELECT * FROM fait_partie WHERE ID_Parcours = ? AND ID_POI = ?";
 	}
 }

@@ -98,11 +98,11 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 		return parcours;
 	}
 
-	@Override
 	public int getIdForNameParcours(String nameObject) throws SQLException {
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapGetIdForNameParcours());
+
 		prepare.setString(1, nameObject);
 		ResultSet rs = prepare.executeQuery();
 		rs.next();
