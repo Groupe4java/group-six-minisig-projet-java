@@ -18,6 +18,6 @@ public class MapPoi {
 		return "SELECT * FROM `tb_poi` WHERE ID_Lieu = ?";
 	}
 	public String mapListAllPoiOfParcours(){
-		return "SELECT tb_poi.* FROM tb_poi INNER JOIN (tb_parcours INNER JOIN fait_partie ON tb_parcours.ID_Parcours = fait_partie.ID_Parcours) ON tb_poi.ID_POI = fait_partie.ID_POI WHERE (((tb_parcours.Libelle_Parcours)=1));";
+		return "SELECT tb_poi.* FROM tb_poi INNER JOIN fait_partie ON tb_poi.ID_POI = fait_partie.ID_POI WHERE fait_partie.ID_Parcours = ?";
 	}
 }

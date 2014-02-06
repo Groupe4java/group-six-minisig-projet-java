@@ -24,6 +24,18 @@ public class ParcoursProcessus {
 	public Parcours selectParcours(){
 		return null;
 	}
+	public int getIdForNameParcours(String libelleParcours){
+		int tempInt;
+		ParcoursTest dao = null;
+		dao = new ParcoursDAO();
+		try {
+			tempInt = dao.getIdForNameParcours(libelleParcours);
+			return tempInt;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 	public void addParcours(String nameParcours, String descriptionLieu, int idLieu){
 		Parcours p = new Parcours(nameParcours, descriptionLieu, idLieu);
 		DAO dao = null;

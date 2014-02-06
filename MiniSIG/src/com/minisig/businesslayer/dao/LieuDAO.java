@@ -16,7 +16,6 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
-		
 		prepare.setString(1, ((Lieu) o).getNameLieu());
 		prepare.setString(2, ((Lieu) o).getDescriptionLieu());
 		prepare.setString(3, ((Lieu) o).getImageUrlLieu());
@@ -56,7 +55,6 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 		prepare.execute();
 		prepare.close();
 		state.close();
-		
 	}
 
 	public List<Lieu> listAllObject() throws SQLException{
@@ -71,6 +69,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 		}
 		return lieus;
 	}
+	
 	public String getImageForObject(String idOjbect) throws SQLException {
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -88,7 +87,6 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 		
 	}
 
-	@Override
 	public Lieu selectObject() throws SQLException {
 		
 		int x = 0;
@@ -117,7 +115,6 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 		return tempString;
 	}
 
-	@Override
 	public int getIdForNameLieu(String nameObject) throws SQLException {
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);

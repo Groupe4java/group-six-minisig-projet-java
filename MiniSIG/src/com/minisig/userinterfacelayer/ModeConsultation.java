@@ -231,6 +231,7 @@ public class ModeConsultation extends JFrame {
 
 					listX.add(p.getXPOI());
 					listY.add(p.getXPOI());
+					//if( methodeQuiVerifie si p.getIdPOI())
 					listIsInParcours.add(false);
 				}
 

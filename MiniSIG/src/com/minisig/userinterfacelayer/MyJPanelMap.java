@@ -13,8 +13,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import com.minisig.businesslayer.table.*;
-
 public class MyJPanelMap extends JPanel {
 	
 	public MyJPanelMap(){

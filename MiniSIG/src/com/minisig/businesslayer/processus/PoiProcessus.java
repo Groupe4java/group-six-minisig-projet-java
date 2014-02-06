@@ -22,19 +22,19 @@ public class PoiProcessus {
 		}
 	}
 	
-	public List<Poi> listAllPoiForParcours(String Parcours){
+	public List<Poi> listAllPoiForParcours(int idParcours){
 		List<Poi> pois = new ArrayList<>();
 		PoiTest dao = null;
 		dao = new PoiDAO();
 		try{
-			pois = dao.ListAllPoiOfParcours(Parcours);
+			pois = dao.ListAllPoiOfParcours(idParcours);
 			return pois;
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 			return null;
 		}
-		}
+	}
 	public void addListPoiForParcours(String lieu){
 		
 	}
