@@ -1,6 +1,4 @@
 package com.minisig.businesslayer.dao;
-
-import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ import com.minisig.dataaccesslayer.*;
 public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 
 	public void addObject(Parcours o) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapAddParcours());
 		
@@ -27,7 +25,7 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 	}
 
 	public void removeObject(Parcours o) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapRemoveParcours());
 		
@@ -41,7 +39,7 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 	}
 
 	public void updateObject(Parcours input, Parcours output) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapUpdateParcours());
 		
@@ -61,7 +59,7 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 
 	public List<Parcours> listAllObject() throws SQLException {
 		List<Parcours> parcours = new ArrayList<>();
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement();
 		ResultSet rs = state.executeQuery(new MapParcours().mapListAllParcours());
 		while (rs.next()){
@@ -85,7 +83,7 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 
 	public List<Parcours> ListAllParcoursOfLieu(String nameLieu) throws SQLException {
 		List<Parcours> parcours = new ArrayList<>();
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement();
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapListAllParcoursOfLieu());
 		prepare.setString(1, nameLieu);
@@ -99,7 +97,7 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 	}
 
 	public int getIdForNameParcours(String nameObject) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapParcours().mapGetIdForNameParcours());
 
