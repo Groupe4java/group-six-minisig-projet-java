@@ -1,6 +1,4 @@
 package com.minisig.businesslayer.dao;
-
-import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +11,12 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 
 	public void addObject(Lieu o) throws SQLException {
 
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
-		prepare.setString(1, ((Lieu) o).getNameLieu());
-		prepare.setString(2, ((Lieu) o).getDescriptionLieu());
-		prepare.setString(3, ((Lieu) o).getImageUrlLieu());
+		prepare.setString(1, o.getNameLieu());
+		prepare.setString(2, o.getDescriptionLieu());
+		prepare.setString(3, o.getImageUrlLieu());
 		prepare.execute();
 		prepare.close();
 		state.close();
@@ -26,7 +24,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 
 	public void removeObject(Lieu o) throws SQLException {
 		
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapRemoveLieu());
 		
@@ -40,7 +38,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	
 	public void updateObject(Lieu input, Lieu output) throws SQLException{
 		
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapUpdateLieu());
 		
@@ -60,7 +58,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	public List<Lieu> listAllObject() throws SQLException{
 		
 		List<Lieu> lieus = new ArrayList<>();
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement();
 		ResultSet rs = state.executeQuery(new MapLieu().mapListAllLieu());
 		while (rs.next()){
@@ -71,7 +69,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	}
 	
 	public String getImageForObject(String idOjbect) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapSelectImageLieu());
 		prepare.setString(1, idOjbect);
@@ -90,7 +88,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	public Lieu selectObject() throws SQLException {
 		
 		int x = 0;
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
 		prepare.setInt(1, x);
@@ -103,7 +101,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	@Override
 	public String getImageForLieu(String nameObject) throws SQLException {
 		String tempString = null;
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapSelectImageLieu());		
 		prepare.setString(1, nameObject);
@@ -116,7 +114,7 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	}
 
 	public int getIdForNameLieu(String nameObject) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapGetIdForNameLieu());
 		prepare.setString(1, nameObject);
