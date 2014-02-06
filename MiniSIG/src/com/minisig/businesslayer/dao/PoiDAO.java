@@ -17,7 +17,7 @@ public Poi selectObject() throws SQLException {
 	
 	public void addObject(Poi o) throws SQLException {
 		
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapAddPoi());
 		
@@ -36,7 +36,7 @@ public Poi selectObject() throws SQLException {
 
 	public void removeObject(Poi o) throws SQLException {
 		
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapRemovePoi());
 		
@@ -54,7 +54,7 @@ public Poi selectObject() throws SQLException {
 
 	public void updateObject(Poi input, Poi output) throws SQLException {
 		
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapUpdatePoi());
 		
@@ -81,7 +81,7 @@ public Poi selectObject() throws SQLException {
 	public List<Poi> listAllObject() throws SQLException {
 		
 		List<Poi> poi = new ArrayList<>();
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement();
 		ResultSet rs = state.executeQuery(new MapPoi().mapListAllPoiOfLieu());
 		while (rs.next()){
@@ -102,7 +102,7 @@ public Poi selectObject() throws SQLException {
 	public List<Poi> ListAllPoiOfLieu(int idLieu) throws SQLException {
 
 		List<Poi> poi = new ArrayList<>();
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapListAllPoiOfLieu());
 		prepare.setInt(1, idLieu);	
@@ -119,7 +119,7 @@ public Poi selectObject() throws SQLException {
 	public boolean checkPoiIntoParcours(int idParcours, int idPoi) throws SQLException {
 		
 		boolean hasRows = false;
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapGetExistencePoiInParcours());
 		prepare.setInt(1, idParcours);	
