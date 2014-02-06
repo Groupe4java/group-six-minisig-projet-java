@@ -8,12 +8,12 @@ import com.minisig.businesslayer.dao.*;
 
 public class PoiProcessus {
 
-	public List<Poi> listAllPoiForLieu(String lieu){
+	public List<Poi> listAllPoiForLieu(int idLieu){
 		List<Poi> pois = new ArrayList<>();
 		PoiTest dao = null;
 		dao = new PoiDAO();
 		try{
-			pois = dao.ListAllPoiOfLieu(lieu);
+			pois = dao.ListAllPoiOfLieu(idLieu);
 			return pois;
 		}
 		catch(SQLException e){
@@ -21,6 +21,7 @@ public class PoiProcessus {
 			return null;
 		}
 	}
+	
 	public List<Poi> listAllPoiForParcours(String Parcours){
 		List<Poi> pois = new ArrayList<>();
 		PoiTest dao = null;

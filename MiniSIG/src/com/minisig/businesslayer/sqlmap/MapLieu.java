@@ -19,4 +19,7 @@ public class MapLieu {
 	public String mapListAllLieu(){
 		return "SELECT * FROM tb_lieu";
 	}
+	public String mapGetIdForNameLieu(){
+		return "SELECT ID_Lieu FROM tb_lieu WHERE Libelle_Lieu = ?";
+	}
 }

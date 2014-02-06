@@ -53,7 +53,7 @@ public class LieuProcessus {
 		LieuTest dao = null;
 		dao = new LieuDAO();
 		try {
-				return dao.getImageForLieu(libelleVille);
+			return dao.getImageForLieu(libelleVille);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -61,8 +61,17 @@ public class LieuProcessus {
 
 	
 	}
-	public List<Poi> ListAllPoiOfLieu(){
-		
-		return null;
+	public int getIdForNameLieu(String libelleVille){
+		int tempInt;
+		LieuTest dao = null;
+		dao = new LieuDAO();
+		try {
+			tempInt = dao.getIdForNameLieu(libelleVille);
+			return tempInt;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+
 	}
 }

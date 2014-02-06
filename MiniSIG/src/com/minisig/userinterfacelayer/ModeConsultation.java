@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,6 +28,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import com.minisig.businesslayer.table.*;
+import com.minisig.businesslayer.processus.*;
 
 public class ModeConsultation extends JFrame {
 
@@ -165,8 +169,15 @@ public class ModeConsultation extends JFrame {
 		panelNorth.add(panelMenu, BorderLayout.SOUTH);
 		
 		comboBoxLieu = new JComboBox();
-		comboBoxLieu.setModel(new DefaultComboBoxModel(new String[] {"Paris", "Marraqu\u00E8che", "Alger"}));
+		comboBoxLieu.setModel(new DefaultComboBoxModel(new String[] {""}));
 		panelMenu.add(comboBoxLieu);
+
+		List<Lieu> listLieu = null;
+		LieuProcessus lieuProc = new LieuProcessus();
+		listLieu = lieuProc.ListAllLieu();
+		for(Lieu e : listLieu)comboBoxLieu.addItem(e.getNameLieu());
+			
+
 		
 		btnGoLieu = new JButton("Go");
 		
@@ -174,7 +185,7 @@ public class ModeConsultation extends JFrame {
 		panelMenu.add(btnGoLieu);
 		
 		comboBoxParcours = new JComboBox();
-		comboBoxParcours.setModel(new DefaultComboBoxModel(new String[] {"Maisons \u00E0 paris"}));
+		comboBoxParcours.setModel(new DefaultComboBoxModel(new String[] {""}));
 		comboBoxParcours.setEnabled(false);
 		panelMenu.add(comboBoxParcours);
 		
@@ -210,17 +221,19 @@ public class ModeConsultation extends JFrame {
 				ArrayList<Boolean> listIsInParcours = new ArrayList<>();
 				ArrayList<Boolean> listPopUpOn = new ArrayList<>();
 				
+				List<Poi> listPOI = null;
+				PoiProcessus poiProc = new PoiProcessus();
+				LieuProcessus lieuProc = new LieuProcessus();
+				//int tempObject = lieuProc.getIdForNameLieu(comboBoxLieu.getSelectedItem().toString());
+				listPOI = poiProc.listAllPoiForLieu(lieuProc.getIdForNameLieu(comboBoxLieu.getSelectedItem().toString()));
 				
-				listX.add(300);
-				listY.add(300);
-				listIsInParcours.add(false);
-				listPopUpOn.add(false);
-				
-				listX.add(200);
-				listY.add(200);
-				listIsInParcours.add(false);
-				listPopUpOn.add(false);
-				
+				for(Poi p: listPOI){
+
+					listX.add(p.getXPOI());
+					listY.add(p.getXPOI());
+					listIsInParcours.add(false);
+				}
+
 				listX.size();
 				((MyJPanelMap) panelMAP).removeArrayList(); 			//VIDE L'ARRAYLIST DE MyJPANELMAP
 				((MyJPanelMap) panelMAP).setBoutonGoLieuClicked(true); 	//SET BOUTONGOLIEUCLICKED TO TRUE
@@ -230,13 +243,15 @@ public class ModeConsultation extends JFrame {
 				{
 					//REMPLISSAGE DE L'ARRAYLIST DE MyJPANELMAP
 					//((MyJPanelMap) panelMAP).addListPopUpOn(listPopUpOn.get(i));
-					System.out.println("TEST5");
 					((MyJPanelMap) panelMAP).setArrayPositionPOI(listX.get(i), listY.get(i), listIsInParcours.get(i));
-					System.out.println("TEST6");
 				}
-				System.out.println("TEST7");
 				repaint();
-				System.out.println("TEST8");
+				comboBoxParcours.removeAllItems();
+				List<Parcours> listParcours = null;
+				listParcours = lieuProc.ListAllParcoursOfLieu(comboBoxLieu.getSelectedItem().toString());
+				for(Parcours e: listParcours) comboBoxParcours.addItem(e.getLibelleParcours());
+				((MyJPanelMap) panelMAP).setMapLieu(lieuProc.getImageForLieu(comboBoxLieu.getSelectedItem().toString()));
+
 			}
 		});
 		//Bouton Go Parcours

@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import com.minisig.businesslayer.table.*;
+
 public class MyJPanelMap extends JPanel {
 	
 	public MyJPanelMap(){
@@ -21,7 +23,7 @@ public class MyJPanelMap extends JPanel {
 	
 	public boolean boutonGoLieuClicked;
 	
-	String mapLieu = "D:\\Users\\Gaëtan\\Pictures\\map.png";
+	String mapLieu = null;
 	int nombrePOI;
 	int originWidht = 512;
 	int originHeight = 408;
@@ -57,19 +59,15 @@ public class MyJPanelMap extends JPanel {
 		return bool;
 	}
 	
-
-
 	public void setBoutonGoLieuClicked(boolean boutonGoLieuClicked) {
 		this.boutonGoLieuClicked = boutonGoLieuClicked;
 	}
 
-	
 	public void removeArrayList()
 	{
 		listX.removeAll(listX);
 		listY.removeAll(listY);
 	}
-	
 	
 	public void setArrayPositionPOI(int newX, int newY, boolean isInParcours)
 	{
@@ -85,7 +83,7 @@ public class MyJPanelMap extends JPanel {
 	
 	public void setMapLieu(String mapLieu)
 	{
-		mapLieu = this.mapLieu;
+		this.mapLieu = mapLieu;
 	}
 
 	public int getWidthPanelMap()
@@ -105,31 +103,28 @@ public class MyJPanelMap extends JPanel {
 		g2d = (Graphics2D) g;
 		try 
 		{
+			
+			if(mapLieu != null){
 			//Création de l'objet Image
-		Image img = ImageIO.read(new File(mapLieu));
+			Image img = ImageIO.read(new File(mapLieu));
 			//Draw l'image avec comme taille, la taille du panel
-		g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-		} 
+			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+			} 
+		}
 		catch (IOException e) 
 		{
 		e.printStackTrace();
 		}
-				
-		System.out.println("TRY1");
 		if(boutonGoLieuClicked == true)
 		{
-			System.out.println("TRY2");
 			for(int i = 0; i < listX.size() ; i++)
 			{
-				System.out.println("TRY3");
 				if(listIsInParcours.get(i)){g.setColor(Color.red);}
-				else{g.setColor(Color.yellow);}
-				System.out.println("TRY4");
+				else{g.setColor(Color.red);}
 				//if(listPopUpOn.get(i))
 				//{
 				//	g2d.drawString("Yooooooooooo", listX.get(i) * getWidth()/originWidht, listY.get(i) * getHeight()/originHeight);
 				//}
-				System.out.println("TRY5");
 				oval = new Ellipse2D.Double(listX.get(i) * getWidth()/originWidht, listY.get(i) * getHeight()/originHeight, 20, 20);
 				g2d.fill(oval);
 				listOval.add(oval);

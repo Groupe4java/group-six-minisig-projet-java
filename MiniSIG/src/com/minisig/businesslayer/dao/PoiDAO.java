@@ -99,12 +99,13 @@ public Poi selectObject() throws SQLException {
 	}
 
 	@Override
-	public List<Poi> ListAllPoiOfLieu(String Lieu) throws SQLException {
+	public List<Poi> ListAllPoiOfLieu(int idLieu) throws SQLException {
+
 		List<Poi> poi = new ArrayList<>();
 		Connection con = new DataAccess().createConnection();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapListAllPoiOfLieu());
-		prepare.setString(1, Lieu);		
+		prepare.setInt(1, idLieu);	
 		ResultSet rs = prepare.executeQuery();	
 		while (rs.next()){
 			Poi tempObject = new Poi(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
