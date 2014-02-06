@@ -74,4 +74,23 @@ public class LieuProcessus {
 		}
 
 	}
+	public void addLieu(String nameLieu, String descriptionLieu, String imageUrlLieu){
+		Lieu lieuToAdd = new Lieu(nameLieu, descriptionLieu, imageUrlLieu);
+		DAO dao = null;
+		dao = new LieuDAO();
+		try {
+			dao.addObject(lieuToAdd);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void removeLieu(){
+		
+	}
+	public void updateLieu(){
+		
+	}
+	public void selectLieu(int idLieu){
+		
+	}
 }
