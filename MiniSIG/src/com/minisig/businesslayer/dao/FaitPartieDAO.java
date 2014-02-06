@@ -22,7 +22,7 @@ public class FaitPartieDAO implements DAO<FaitPartie>{
 
 	@Override
 	public void addObject(FaitPartie f) throws SQLException {
-		Connection con = new DataAccess().createConnection();
+		Connection con = DataAccess.getInstance();
 		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
 		
