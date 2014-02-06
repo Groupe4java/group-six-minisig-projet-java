@@ -80,7 +80,7 @@ public class ModeConsultation extends JFrame {
 	public void newComponents()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 520);
+		setBounds(100, 100, 700, 535);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -161,26 +161,41 @@ public class ModeConsultation extends JFrame {
 		panelPoiSOUTH.add(verticalStrut);
 		
 		JPanel panelEdition = new JPanel();
+		panelEdition.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelDroite.add(panelEdition);
 		panelEdition.setLayout(new BoxLayout(panelEdition, BoxLayout.PAGE_AXIS));
 		
 		JPanel panelEditTitle = new JPanel();
+		panelEditTitle.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelEdition.add(panelEditTitle);
 		
 		JLabel label = new JLabel("EDIT Type");
 		panelEditTitle.add(label);
 		
-		JPanel panelEditButtonTop = new JPanel();
-		panelEdition.add(panelEditButtonTop);
+		JPanel panelEditButtonTopType = new JPanel();
+		panelEditButtonTopType.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelEdition.add(panelEditButtonTopType);
+		
+		JButton btnLieu = new JButton("LIEU");
+		panelEditButtonTopType.add(btnLieu);
+		
+		JButton btnParcours = new JButton("PARCOURS");
+		panelEditButtonTopType.add(btnParcours);
+		
+		JButton btnPoi = new JButton("POI");
+		panelEditButtonTopType.add(btnPoi);
+		
+		JPanel panelEditButtonAction = new JPanel();
+		panelEdition.add(panelEditButtonAction);
 		
 		JButton button = new JButton("MODIF");
-		panelEditButtonTop.add(button);
+		panelEditButtonAction.add(button);
 		
 		JButton button_1 = new JButton("DELETE");
-		panelEditButtonTop.add(button_1);
+		panelEditButtonAction.add(button_1);
 		
 		JButton button_2 = new JButton("ADD");
-		panelEditButtonTop.add(button_2);
+		panelEditButtonAction.add(button_2);
 		
 		JPanel panelEditPart = new JPanel();
 		panelEdition.add(panelEditPart);
@@ -313,7 +328,7 @@ public class ModeConsultation extends JFrame {
 		JPanel panelMode = new JPanel();
 		panelNorth.add(panelMode, BorderLayout.NORTH);
 		
-		JLabel lblModeConsultation = new JLabel("Mode Consultation");
+		JLabel lblModeConsultation = new JLabel("Mode Edition");
 		panelMode.add(lblModeConsultation);
 		
 		JPanel panelMenu = new JPanel();
