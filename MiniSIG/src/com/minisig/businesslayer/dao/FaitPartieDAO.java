@@ -14,44 +14,33 @@ import com.minisig.dataaccesslayer.DataAccess;
 
 public class FaitPartieDAO implements DAO<FaitPartie>{
 
-	@Override
 	public FaitPartie selectObject() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void addObject(FaitPartie f) throws SQLException {
 		Connection con = DataAccess.getInstance();
-		Statement state = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
-		
-		
 		prepare.execute();
-		prepare.close();
-		state.close();
-		
+		prepare.close();	
 	}
 
-	@Override
 	public void removeObject(FaitPartie f) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void updateObject(FaitPartie o, FaitPartie i) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public List listAllObject() throws SQLException {
+	public List<FaitPartie> listAllObject() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void closeConnection() throws SQLException {
 		// TODO Auto-generated method stub
 		
