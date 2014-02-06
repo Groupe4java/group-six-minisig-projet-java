@@ -7,7 +7,10 @@ import java.sql.SQLException;
 public class DataAccess {
 	private Connection con;
 	private String DriverName = "com.mysql.jdbc.Driver";
-	private String bddUrl = "jdbc:mysql://localhost/dbprojet";
+	private String bddUrl = "jdbc:mysql://localhost/minisig";
+	private String user ="";
+	private String passwd="";
+	
 	public DataAccess(){		
 	}
 	public Connection createConnection(){
@@ -21,10 +24,20 @@ public class DataAccess {
 		}
 
 		try{
-			this.con = DriverManager.getConnection(this.bddUrl, "root", "root");
+			this.con = DriverManager.getConnection(this.bddUrl, "root", "");
 		} 
 		catch(SQLException e){
 			throw new RuntimeException("erreur dans l'obtention de la connexion --le prog va s'arrêter");
+		}
+		return con;
+	}
+	public Connection getInstance(){
+		if(this.con == null){
+			try {
+				this.con = DriverManager.getConnection(bddUrl, user, passwd);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return con;
 	}
