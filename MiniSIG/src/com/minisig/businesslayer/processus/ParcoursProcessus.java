@@ -26,11 +26,11 @@ public class ParcoursProcessus {
 	}
 	public int getIdForNameParcours(String libelleParcours){
 		int tempInt;
-		ParcoursTest dao = null;
-		dao = new ParcoursDAO();
+		ParcoursTest daop = null;
+		daop = new ParcoursDAO();
 		try {
 			
-			tempInt = dao.getIdForNameParcours(libelleParcours);
+			tempInt = daop.getIdForNameParcours(libelleParcours);
 			return tempInt;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,6 +47,17 @@ public class ParcoursProcessus {
 		catch(SQLException e){
 			e.printStackTrace();
 		}
+		dao = new FaitPartieDAO();
+		FaitPartie faitPartie;
+		for(int i =0; i<10; i++){
+			faitPartie = new FaitPartie(getIdForNameParcours(nameParcours), idLieu);
+			try {
+				dao.addObject(faitPartie);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	public void removeParcours(){
 		

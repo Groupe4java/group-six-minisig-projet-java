@@ -1,5 +1,6 @@
 package com.minisig.businesslayer.dao;
 
+import java.security.interfaces.RSAKey;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,13 @@ import com.minisig.dataaccesslayer.*;
 
 public class PoiDAO implements DAO<Poi>, PoiTest{
 
-	public Poi selectObject() throws SQLException {
-		return null;
+	public Poi selectObject(int idPoi) throws SQLException {
+		Connection con = DataAccess.getInstance();
+		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapSelectPoi());
+		prepare.setInt(1, idPoi);
+		ResultSet rs = prepare.executeQuery();
+		Poi poi = new Poi(idPoi, rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+		return poi;
 	}
 	
 	public void addObject(Poi o) throws SQLException {

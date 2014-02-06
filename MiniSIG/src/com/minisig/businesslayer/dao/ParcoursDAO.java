@@ -58,7 +58,7 @@ public class ParcoursDAO implements DAO<Parcours>, ParcoursTest{
 
 	}
 
-	public Parcours selectObject() throws SQLException {
+	public Parcours selectObject(int idParcours) throws SQLException {
 		
 		return null;
 	}

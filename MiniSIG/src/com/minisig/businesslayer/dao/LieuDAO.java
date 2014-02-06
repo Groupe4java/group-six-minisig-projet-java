@@ -22,9 +22,9 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 	public void removeObject(Lieu o) throws SQLException {
 		Connection con = DataAccess.getInstance();
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapRemoveLieu());
-		prepare.setString(1, ((Lieu) o).getNameLieu());
-		prepare.setString(2, ((Lieu) o).getDescriptionLieu());
-		prepare.setString(3, ((Lieu) o).getImageUrlLieu());
+		prepare.setString(1, o.getNameLieu());
+		prepare.setString(2, o.getDescriptionLieu());
+		prepare.setString(3, o.getImageUrlLieu());
 		prepare.execute();
 		prepare.close();
 	}
@@ -67,11 +67,10 @@ public class LieuDAO implements DAO<Lieu>, LieuTest {
 		
 	}
 
-	public Lieu selectObject() throws SQLException {
-		int x = 0;
+	public Lieu selectObject(int idLieu) throws SQLException {
 		Connection con = DataAccess.getInstance();
 		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
-		prepare.setInt(1, x);
+		prepare.setInt(1, idLieu);
 		ResultSet rs = prepare.executeQuery();
 		prepare.close();
 		return new Lieu(rs.getString(1), rs.getString(2), rs.getString(3));

@@ -24,12 +24,12 @@ public class LieuProcessus {
 			return null;
 		}
 	}
-	public Lieu GetObject(String nameLieu){
+	public Lieu GetObject(int idLieu){
 		DAO dao = null;
 		Lieu lieu = null;
 		dao = new LieuDAO();
 		try {
-			lieu = (Lieu) dao.selectObject();
+			lieu = (Lieu) dao.selectObject(idLieu);
 			return lieu;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,11 +84,27 @@ public class LieuProcessus {
 			e.printStackTrace();
 		}
 	}
-	public void removeLieu(){
-		
+	public void removeLieu(String nameLieu, String descriptionLieu, String imageUrlLieu){
+		Lieu lieuToDeleteLieu = new Lieu(nameLieu, descriptionLieu, imageUrlLieu);
+		DAO dao = null;
+		dao = new LieuDAO();
+		try {
+			dao.removeObject(lieuToDeleteLieu);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	public void updateLieu(){
-		
+	public void updateLieu(String InputNameLieu, String inputDescriptionLieu, String InputImageUrlLieu, String OutputNameLieu, 
+			String OutputDescriptionLieu, String OutputimageUrlLieu){
+		Lieu lieuToUpdate = new Lieu(InputNameLieu, inputDescriptionLieu, InputImageUrlLieu);
+		Lieu lieuToFill = new Lieu(OutputNameLieu, OutputDescriptionLieu, OutputimageUrlLieu);
+		DAO dao = null;
+		dao = new LieuDAO();
+		try {
+			dao.updateObject(lieuToUpdate, lieuToFill);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	public void selectLieu(int idLieu){
 		

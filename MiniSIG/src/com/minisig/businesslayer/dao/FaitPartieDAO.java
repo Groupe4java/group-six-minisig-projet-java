@@ -1,9 +1,5 @@
 package com.minisig.businesslayer.dao;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import com.minisig.businesslayer.table.FaitPartie;
@@ -14,15 +10,17 @@ import com.minisig.dataaccesslayer.DataAccess;
 
 public class FaitPartieDAO implements DAO<FaitPartie>{
 
-	public FaitPartie selectObject() throws SQLException {
+	public FaitPartie selectObject(int faitPartie) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void addObject(FaitPartie f) throws SQLException {
 		Connection con = DataAccess.getInstance();
-		PreparedStatement prepare = con.prepareStatement(new MapLieu().mapAddLieu());
-		prepare.execute();
+		PreparedStatement prepare = con.prepareStatement(new MapFaitPartie().mapAddFaitPartie());
+		prepare.setInt(1, f.getIdPoi());
+		prepare.setInt(2, f.getIdParcours());
+		prepare.executeUpdate();
 		prepare.close();	
 	}
 

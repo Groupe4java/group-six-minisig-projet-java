@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface DAO <T>{
 
-	public abstract T selectObject() throws SQLException;
+	public abstract T selectObject(int idObject) throws SQLException;
 	//
 	public abstract void addObject(T o) throws SQLException;
 	//

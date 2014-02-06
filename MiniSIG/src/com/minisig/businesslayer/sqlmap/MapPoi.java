@@ -12,10 +12,10 @@ public class MapPoi {
 		return "UPDATE tb_poi SET Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ? WHERE Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ?";
 	}
 	public String mapSelectPoi(){
-		return "";
+		return "SELECT * FROM tb_poi WHERE ID_POI = ?";
 	}
 	public String mapListAllPoiOfLieu(){
-		return "SELECT * FROM `tb_poi` WHERE ID_Lieu = ?";
+		return "SELECT * FROM tb_poi WHERE ID_Lieu = ?";
 	}
 	public String mapGetExistencePoiInParcours(){
 		return "SELECT * FROM fait_partie WHERE ID_Parcours = ? AND ID_POI = ?";
