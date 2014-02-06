@@ -4,41 +4,35 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DataAccess {
-	private Connection con;
-	private String DriverName = "com.mysql.jdbc.Driver";
-	private String bddUrl = "jdbc:mysql://localhost/minisig";
-	private String user ="";
-	private String passwd="";
-	
-	public DataAccess(){		
-	}
-	public Connection createConnection(){
 
+public class DataAccess {
+
+	private static Connection connect;
+	private static String DriverName = "com.mysql.jdbc.Driver";
+	private static String bddUrl = "jdbc:mysql://localhost/dbprojet";
+	private static String user = "root";
+	private static String psswd = "root";
+
+	private DataAccess() throws SQLException{
 		try{
-			Class.forName(this.DriverName);	
+			Class.forName(DriverName);	
 		}
 		catch(ClassNotFoundException cnfe){
-		    System.out.println("La classe "+this.DriverName+" n'a pas été trouvée");
+		    System.out.println("La classe "+DriverName+" n'a pas été trouvée");
 		    cnfe.printStackTrace();	
 		}
-
-		try{
-			this.con = DriverManager.getConnection(this.bddUrl, "root", "");
-		} 
-		catch(SQLException e){
-			throw new RuntimeException("erreur dans l'obtention de la connexion --le prog va s'arrêter");
-		}
-		return con;
+		connect = DriverManager.getConnection(bddUrl, user, psswd);
 	}
-	public Connection getInstance(){
-		if(this.con == null){
-			try {
-				this.con = DriverManager.getConnection(bddUrl, user, passwd);
-			} catch (SQLException e) {
+	public static Connection getInstance(){
+		if(connect == null){
+			try{
+				new DataAccess();
+			} 
+			catch(SQLException e){
+				System.out.println("Erreur dans l'obtention de la connexion à la base de données");
 				e.printStackTrace();
 			}
 		}
-		return con;
+		return connect;
 	}
 }
