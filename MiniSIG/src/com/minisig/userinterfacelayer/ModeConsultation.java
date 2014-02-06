@@ -152,7 +152,7 @@ public class ModeConsultation extends JFrame {
 				try 
 				{
 					//Création de l'objet Image
-				Image img = ImageIO.read(new File("C:\\Users\\Luc\\Desktop\\stationnement-payant-paris.jpg"));
+				Image img = ImageIO.read(new File("C:\\Users\\Nico\\Desktop\\stationnement-payant-paris.jpg"));
 					//Draw l'image avec comme taille, la taille du panel
 				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 				} 
@@ -208,6 +208,7 @@ public class ModeConsultation extends JFrame {
 		panelMenu.add(btnGoParcours);
 	}
 	
+	
 	public void FillcomboBoxLieu(JComboBox comboBoxLieu){
 		List<Lieu> lieus = null;
 		LieuProcessus li = new LieuProcessus();
@@ -223,17 +224,25 @@ public class ModeConsultation extends JFrame {
 		parcours = li.ListAllParcoursOfLieu(nameLieu);
 		for(Parcours e: parcours) comboBoxParcours.addItem(e.getLibelleParcours());
 	}
-	public void FillPoiIn(String nameLieu){
+	public String FillCarteLieu(String nameLieu){
+		String url;
+		LieuProcessus li = new LieuProcessus();
+		url = li.getImageForLieu(nameLieu);
+		return url;
+		}
+	public List<Poi> getPoiInLieu(String nameLieu){
 		List<Poi> pois = null;
 		PoiProcessus li = new PoiProcessus();
 		pois = li.listAllPoiForLieu(nameLieu);
+		return pois;
 		// Renvoie List avec tout les object POI du lieu
 	}
-	public void FillPoiInParcours(String nameParcours){
+	public List<Poi> getPoiInParcours(String nameParcours){
 		List<Poi> pois = null;
 		PoiProcessus li = new PoiProcessus();
 		pois = li.listAllPoiForParcours(nameParcours);
-		//Renvoie List avec tout les object Poi du parcours
+		return pois;
+
 	}
 	public void newListeners()
 	{
@@ -260,8 +269,14 @@ public class ModeConsultation extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBoxParcours.removeAllItems();
 				FillcomboBoxParcours(comboBoxParcours, comboBoxLieu.getSelectedItem().toString());
+				
+				try {
+					Image img = ImageIO.read(new File(FillCarteLieu(comboBoxLieu.getSelectedItem().toString())));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				comboBoxParcours.setEnabled(true);
-
+				
 			}
 		});
 		//Bouton Go Parcours

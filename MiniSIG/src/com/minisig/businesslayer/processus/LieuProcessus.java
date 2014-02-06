@@ -24,6 +24,18 @@ public class LieuProcessus {
 			return null;
 		}
 	}
+	public Lieu GetObject(String nameLieu){
+		DAO dao = null;
+		Lieu lieu = null;
+		dao = new LieuDAO();
+		try {
+			lieu = (Lieu) dao.selectObject();
+			return lieu;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public List<Parcours> ListAllParcoursOfLieu(String nameLieu){
 		
 		ParcoursTest daoParcours =null;

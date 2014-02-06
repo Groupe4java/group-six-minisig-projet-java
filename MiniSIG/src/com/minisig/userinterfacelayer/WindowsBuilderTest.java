@@ -113,7 +113,7 @@ public class WindowsBuilderTest extends JFrame {
 			public void paintComponent(Graphics g){
 				try 
 				{
-				Image img = ImageIO.read(new File("C:\\Users\\Luc\\Desktop\\stationnement-payant-paris.jpg"));
+				Image img = ImageIO.read(new File("C:\\Users\\Nico\\Desktop\\stationnement-payant-paris.jpg"));
 				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 				} 
 				catch (IOException e) 
