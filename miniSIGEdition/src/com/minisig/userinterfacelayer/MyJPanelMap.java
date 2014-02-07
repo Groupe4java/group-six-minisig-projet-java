@@ -21,6 +21,7 @@ public class MyJPanelMap extends JPanel {
 	
 	public boolean boutonGoLieuClicked;
 	
+
 	String mapLieu = null;
 	int nombrePOI;
 	int originWidht = 512;
