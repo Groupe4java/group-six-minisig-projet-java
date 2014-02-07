@@ -32,7 +32,7 @@ import javax.swing.border.LineBorder;
 import com.minisig.businesslayer.table.*;
 import com.minisig.businesslayer.processus.*;
 
-public class ModeConsultation extends JFrame {
+public class MyJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panelMAP;
@@ -71,22 +71,10 @@ public class ModeConsultation extends JFrame {
 	boolean lieuSelected = false;
 	boolean parcoursSelected = false;
 	
-	//Fonction main
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ModeConsultation frame = new ModeConsultation();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	//Constructeur
-	public ModeConsultation() {
+	public MyJFrame() {
 		panelMAP = new MyJPanelMap();
 		newComponents();
 		newListeners();
