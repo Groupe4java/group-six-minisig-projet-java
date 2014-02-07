@@ -80,7 +80,7 @@ public class ModeConsultation extends JFrame {
 	public void newComponents()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 535);
+		setBounds(100, 100, 800, 535);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -297,8 +297,6 @@ public class ModeConsultation extends JFrame {
 		JPanel panelEditListPOI = new JPanel();
 		panelEditPart.add(panelEditListPOI);
 		
-		JList<? extends E> list = new JList();
-		panelEditListPOI.add(list);
 		
 		JButton button_5 = new JButton("REMOVE");
 		panelEditListPOI.add(button_5);
