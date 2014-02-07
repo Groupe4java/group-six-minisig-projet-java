@@ -16,7 +16,7 @@ public class PoiDAO implements DAO<Poi>, PoiTest{
 		PreparedStatement prepare = con.prepareStatement(new MapPoi().mapSelectPoi());
 		prepare.setInt(1, idPoi);
 		ResultSet rs = prepare.executeQuery();
-		Poi poi = new Poi(idPoi, rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+		Poi poi = new Poi(idPoi, rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
 		return poi;
 	}
 	
@@ -71,7 +71,7 @@ public class PoiDAO implements DAO<Poi>, PoiTest{
 		Statement state = con.createStatement();
 		ResultSet rs = state.executeQuery(new MapPoi().mapListAllPoiOfLieu());
 		while (rs.next()){
-			Poi tempObject = new Poi(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+			Poi tempObject = new Poi(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
 			poi.add(tempObject);
 		}
 		state.close();
@@ -89,7 +89,7 @@ public class PoiDAO implements DAO<Poi>, PoiTest{
 		prepare.setInt(1, idLieu);	
 		ResultSet rs = prepare.executeQuery();	
 		while (rs.next()){
-			Poi tempObject = new Poi(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
+			Poi tempObject = new Poi(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
 			poi.add(tempObject);
 		}
 		prepare.close();

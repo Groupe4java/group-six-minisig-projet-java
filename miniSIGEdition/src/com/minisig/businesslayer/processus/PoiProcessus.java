@@ -50,10 +50,10 @@ public class PoiProcessus {
 			return null;
 		}
 	}
-	public void addPoi(String namePoi, String descriptionPoi, int xPos, int yPos, int nbClic, int idLieu){
+	public void addPoi(String namePoi, String descriptionPoi, String imagePoi, int xPos, int yPos, int nbClic, int idLieu){
 		DAO dao=null;
 		dao = new PoiDAO();
-		Poi p = new Poi(namePoi, descriptionPoi, xPos, yPos, nbClic, idLieu);
+		Poi p = new Poi(namePoi, descriptionPoi, imagePoi, xPos, yPos, nbClic, idLieu);
 		try{
 			dao.addObject(p);
 		}
@@ -61,11 +61,11 @@ public class PoiProcessus {
 			e.printStackTrace();
 		}
 	}
-	public void removePoi(int idPoi, String namePoi, String descriptionPoi, int xPos, int yPos, int nbClic, int idLieu){
+	public void removePoi(int idPoi, String namePoi, String descriptionPoi, String imagePoi, int xPos, int yPos, int nbClic, int idLieu){
 		DAO dao=null;
 		dao = new PoiDAO();
 		
-		Poi p = new Poi(idPoi, namePoi, descriptionPoi, xPos, yPos, nbClic, idLieu);
+		Poi p = new Poi(idPoi, namePoi, descriptionPoi, imagePoi, xPos, yPos, nbClic, idLieu);
 		try{
 			dao.removeObject(p);
 		}
@@ -73,12 +73,12 @@ public class PoiProcessus {
 			e.printStackTrace();
 		}
 	}
-	public void updatePoi(int inputIdPoi, String inputNamePoi, String inputDescriptionPoi, int inputXPos, int inputYPos, int InputNbClic, int InputidLieu,
-			int outputIdPoi, String outputNamePoi, String outputDescriptionPoi, int outputXPos, int outputYPos, int outputNbClic, int outputidLieu){
+	public void updatePoi(int inputIdPoi, String inputNamePoi, String inputDescriptionPoi, String inputImagePoi, int inputXPos, int inputYPos, int InputNbClic, int InputidLieu,
+			int outputIdPoi, String outputNamePoi, String outputDescriptionPoi,  String outputImagePoi, int outputXPos, int outputYPos, int outputNbClic, int outputidLieu){
 		DAO dao=null;
 		dao = new PoiDAO();
-		Poi poiToUpdate = new Poi(inputIdPoi, inputNamePoi, inputDescriptionPoi, inputXPos, inputYPos, InputNbClic, InputidLieu);
-		Poi poiToFill = new Poi(outputIdPoi, outputNamePoi, outputDescriptionPoi, outputXPos, outputYPos, outputNbClic, outputidLieu);
+		Poi poiToUpdate = new Poi(inputIdPoi, inputNamePoi, inputDescriptionPoi, inputImagePoi, inputXPos, inputYPos, InputNbClic, InputidLieu);
+		Poi poiToFill = new Poi(outputIdPoi, outputNamePoi, outputDescriptionPoi, outputImagePoi, outputXPos, outputYPos, outputNbClic, outputidLieu);
 		try{
 			dao.updateObject(poiToUpdate, poiToFill);
 		}

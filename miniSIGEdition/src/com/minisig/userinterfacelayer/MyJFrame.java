@@ -3,6 +3,7 @@ package com.minisig.userinterfacelayer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -50,11 +51,48 @@ public class MyJFrame extends JFrame {
 	JButton btnGoParcours;
 	JButton btnPrevious;
 	JButton btnNext;
+	JButton btnRemove;
+	JLabel labelPosX;
+	JLabel labelPosY;
+	JLabel labelSeparator;
+	JButton buttonValidate;
+	JButton buttonCancel;
+
+	JLabel labelChoixPOI;
+	JComboBox comboBoxChoixPOI;
+	JButton buttonPlus;
+	
+	JLabel labelFirstCombobox;
+	JComboBox comboBoxFirst;
+	JLabel labelSecondComboBox;
+	JComboBox comboBoxSecond;
+	
+	JButton btnPosition;
+	
+	JButton btnLieu;
+	JButton btnParcours;
+	JButton btnPoi;
+	
+	JButton btnMODIF;
+	JButton btnDELETE;
+	JButton btnADD;
+	
+	JLabel labelLibelle;
+	JLabel labelDescription;
+	JLabel labelImage;
+	
+	
+	
+	int typeSelected;		//1 = Lieu, 2 = Parcours, 3 = POI
+	int actionSelected;		//1 = ADD, 2 = MODIF, 3 = DELETE
+	
+	
+
 	int originWidht = 512;
 	int originHeight = 408;
 	int widthPanelMap;
 	int heightPanelMap;
-	
+
 	private JTextField textFieldLibelle;
 	private JTextField textFieldDescription;
 	private JTextField textFieldImage;
@@ -89,10 +127,429 @@ public class MyJFrame extends JFrame {
 	}
 	
 
+	public void setTypeSelected(int typeSelected) {
+		this.typeSelected = typeSelected;
+	}
+
+	//GERE L'AFFICHAGE DES ELEMENTS EDITIONS
+	public void setEtatEditComponent(String actionSelected, String typeSelected) {
+		String action = actionSelected + typeSelected;
+		System.out.println(action);
+		
+		switch(action)
+		{
+		case "11": //LIEU - ADD
+			labelFirstCombobox.setEnabled(false);
+			labelFirstCombobox.setVisible(false);
+			comboBoxFirst.setEnabled(false);
+			comboBoxFirst.setVisible(false);
+			
+			labelSecondComboBox.setEnabled(false);
+			labelSecondComboBox.setVisible(false);
+			comboBoxSecond.setEnabled(false);
+			comboBoxSecond.setVisible(false);
+			
+			labelLibelle.setEnabled(true);
+			labelLibelle.setVisible(true);
+			textFieldLibelle.setEnabled(true);
+			textFieldLibelle.setVisible(true);
+			
+			labelDescription.setEnabled(true);
+			labelDescription.setVisible(true);
+			textFieldDescription.setEnabled(true);
+			textFieldDescription.setVisible(true);
+			
+			labelImage.setEnabled(true);
+			labelImage.setVisible(true);
+			textFieldImage.setEnabled(true);
+			textFieldImage.setVisible(true);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		case "12": //LIEU - MODIF
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(false);
+			labelSecondComboBox.setVisible(false);
+			comboBoxSecond.setEnabled(false);
+			comboBoxSecond.setVisible(false);
+			
+			labelLibelle.setEnabled(true);
+			labelLibelle.setVisible(true);
+			textFieldLibelle.setEnabled(true);
+			textFieldLibelle.setVisible(true);
+			
+			labelDescription.setEnabled(true);
+			labelDescription.setVisible(true);
+			textFieldDescription.setEnabled(true);
+			textFieldDescription.setVisible(true);
+			
+			labelImage.setEnabled(true);
+			labelImage.setVisible(true);
+			textFieldImage.setEnabled(true);
+			textFieldImage.setVisible(true);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		case "13": //LIEU - DELETE
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(false);
+			labelSecondComboBox.setVisible(false);
+			comboBoxSecond.setEnabled(false);
+			comboBoxSecond.setVisible(false);
+			
+			labelLibelle.setEnabled(false);
+			labelLibelle.setVisible(false);
+			textFieldLibelle.setEnabled(false);
+			textFieldLibelle.setVisible(false);
+			
+			labelDescription.setEnabled(false);
+			labelDescription.setVisible(false);
+			textFieldDescription.setEnabled(false);
+			textFieldDescription.setVisible(false);
+			
+			labelImage.setEnabled(false);
+			labelImage.setVisible(false);
+			textFieldImage.setEnabled(false);
+			textFieldImage.setVisible(false);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		case "21": //PARCOURS - ADD
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(false);
+			labelSecondComboBox.setVisible(false);
+			comboBoxSecond.setEnabled(false);
+			comboBoxSecond.setVisible(false);
+			
+			labelLibelle.setEnabled(true);
+			labelLibelle.setVisible(true);
+			textFieldLibelle.setEnabled(true);
+			textFieldLibelle.setVisible(true);
+			
+			labelDescription.setEnabled(true);
+			labelDescription.setVisible(true);
+			textFieldDescription.setEnabled(true);
+			textFieldDescription.setVisible(true);
+			
+			labelImage.setEnabled(false);
+			labelImage.setVisible(false);
+			textFieldImage.setEnabled(false);
+			textFieldImage.setVisible(false);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(true);
+			labelChoixPOI.setVisible(true);
+			comboBoxChoixPOI.setEnabled(true);
+			comboBoxChoixPOI.setVisible(true);
+			buttonPlus.setEnabled(true);
+			buttonPlus.setVisible(true);
+			
+			btnRemove.setEnabled(true);
+			btnRemove.setVisible(true);
+			break;
+		case "22": //PARCOURS - MODIF
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(false);
+			labelSecondComboBox.setVisible(false);
+			comboBoxSecond.setEnabled(false);
+			comboBoxSecond.setVisible(false);
+			
+			labelLibelle.setEnabled(true);
+			labelLibelle.setVisible(true);
+			textFieldLibelle.setEnabled(true);
+			textFieldLibelle.setVisible(true);
+			
+			labelDescription.setEnabled(true);
+			labelDescription.setVisible(true);
+			textFieldDescription.setEnabled(true);
+			textFieldDescription.setVisible(true);
+			
+			labelImage.setEnabled(true);
+			labelImage.setVisible(true);
+			textFieldImage.setEnabled(true);
+			textFieldImage.setVisible(true);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(true);
+			labelChoixPOI.setVisible(true);
+			comboBoxChoixPOI.setEnabled(true);
+			comboBoxChoixPOI.setVisible(true);
+			buttonPlus.setEnabled(true);
+			buttonPlus.setVisible(true);
+			
+			btnRemove.setEnabled(true);
+			btnRemove.setVisible(true);
+			break;
+		case "23": //PARCOURS - DELETE
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(true);
+			labelSecondComboBox.setVisible(true);
+			comboBoxSecond.setEnabled(true);
+			comboBoxSecond.setVisible(true);
+			
+			labelLibelle.setEnabled(false);
+			labelLibelle.setVisible(false);
+			textFieldLibelle.setEnabled(false);
+			textFieldLibelle.setVisible(false);
+			
+			labelDescription.setEnabled(false);
+			labelDescription.setVisible(false);
+			textFieldDescription.setEnabled(false);
+			textFieldDescription.setVisible(false);
+			
+			labelImage.setEnabled(false);
+			labelImage.setVisible(false);
+			textFieldImage.setEnabled(false);
+			textFieldImage.setVisible(false);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		case "31": //POI - ADD
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(false);
+			labelSecondComboBox.setVisible(false);
+			comboBoxSecond.setEnabled(false);
+			comboBoxSecond.setVisible(false);
+			
+			labelLibelle.setEnabled(true);
+			labelLibelle.setVisible(true);
+			textFieldLibelle.setEnabled(true);
+			textFieldLibelle.setVisible(true);
+			
+			labelDescription.setEnabled(true);
+			labelDescription.setVisible(true);
+			textFieldDescription.setEnabled(true);
+			textFieldDescription.setVisible(true);
+			
+			labelImage.setEnabled(true);
+			labelImage.setVisible(true);
+			textFieldImage.setEnabled(true);
+			textFieldImage.setVisible(true);
+			
+			btnPosition.setEnabled(true);
+			btnPosition.setVisible(true);
+			labelPosX.setEnabled(true);
+			labelPosX.setVisible(true);
+			labelSeparator.setEnabled(true);
+			labelSeparator.setVisible(true);
+			labelPosY.setEnabled(true);
+			labelPosY.setVisible(true);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		case "32": //POI - MODIF
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(true);
+			labelSecondComboBox.setVisible(true);
+			comboBoxSecond.setEnabled(true);
+			comboBoxSecond.setVisible(true);
+			
+			labelLibelle.setEnabled(true);
+			labelLibelle.setVisible(true);
+			textFieldLibelle.setEnabled(true);
+			textFieldLibelle.setVisible(true);
+			
+			labelDescription.setEnabled(true);
+			labelDescription.setVisible(true);
+			textFieldDescription.setEnabled(true);
+			textFieldDescription.setVisible(true);
+			
+			labelImage.setEnabled(true);
+			labelImage.setVisible(true);
+			textFieldImage.setEnabled(true);
+			textFieldImage.setVisible(true);
+			
+			btnPosition.setEnabled(true);
+			btnPosition.setVisible(true);
+			labelPosX.setEnabled(true);
+			labelPosX.setVisible(true);
+			labelSeparator.setEnabled(true);
+			labelSeparator.setVisible(true);
+			labelPosY.setEnabled(true);
+			labelPosY.setVisible(true);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		case "33": //POI - DELETE
+			labelFirstCombobox.setEnabled(true);
+			labelFirstCombobox.setVisible(true);
+			comboBoxFirst.setEnabled(true);
+			comboBoxFirst.setVisible(true);
+			
+			labelSecondComboBox.setEnabled(true);
+			labelSecondComboBox.setVisible(true);
+			comboBoxSecond.setEnabled(true);
+			comboBoxSecond.setVisible(true);
+			
+			labelLibelle.setEnabled(false);
+			labelLibelle.setVisible(false);
+			textFieldLibelle.setEnabled(false);
+			textFieldLibelle.setVisible(false);
+			
+			labelDescription.setEnabled(false);
+			labelDescription.setVisible(false);
+			textFieldDescription.setEnabled(false);
+			textFieldDescription.setVisible(false);
+			
+			labelImage.setEnabled(false);
+			labelImage.setVisible(false);
+			textFieldImage.setEnabled(false);
+			textFieldImage.setVisible(false);
+			
+			btnPosition.setEnabled(false);
+			btnPosition.setVisible(false);
+			labelPosX.setEnabled(false);
+			labelPosX.setVisible(false);
+			labelSeparator.setEnabled(false);
+			labelSeparator.setVisible(false);
+			labelPosY.setEnabled(false);
+			labelPosY.setVisible(false);
+			
+			labelChoixPOI.setEnabled(false);
+			labelChoixPOI.setVisible(false);
+			comboBoxChoixPOI.setEnabled(false);
+			comboBoxChoixPOI.setVisible(false);
+			buttonPlus.setEnabled(false);
+			buttonPlus.setVisible(false);
+			
+			btnRemove.setEnabled(false);
+			btnRemove.setVisible(false);
+			break;
+		}
+	}
+	
 	public void newComponents()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 535);
+		setBounds(100, 100, 850, 570);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -150,7 +607,8 @@ public class MyJFrame extends JFrame {
 		JPanel panelTitle = new JPanel();
 		panelPoiCENTER.add(panelTitle);
 		
-		JLabel lblTitre = new JLabel("Titre");
+		lblTitre = new JLabel("Titre");
+		lblTitre.setPreferredSize(new Dimension(150,50));
 		lblTitre.setVerticalAlignment(SwingConstants.TOP);
 		lblTitre.setHorizontalAlignment(SwingConstants.LEFT);
 		panelTitle.add(lblTitre);
@@ -158,7 +616,8 @@ public class MyJFrame extends JFrame {
 		JPanel panelDescription = new JPanel();
 		panelPoiCENTER.add(panelDescription);
 		
-		JLabel lblDescription = new JLabel("Description");
+		lblDescription = new JLabel("Description");
+		lblDescription.setPreferredSize(new Dimension(150,50));
 		lblDescription.setVerticalAlignment(SwingConstants.TOP);
 		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		panelDescription.add(lblDescription);
@@ -189,26 +648,29 @@ public class MyJFrame extends JFrame {
 		panelEditButtonTopType.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelEdition.add(panelEditButtonTopType);
 		
-		JButton btnLieu = new JButton("LIEU");
+		btnLieu = new JButton("LIEU");
 		panelEditButtonTopType.add(btnLieu);
 		
-		JButton btnParcours = new JButton("PARCOURS");
+		btnParcours = new JButton("PARCOURS");
 		panelEditButtonTopType.add(btnParcours);
 		
-		JButton btnPoi = new JButton("POI");
+		btnPoi = new JButton("POI");
 		panelEditButtonTopType.add(btnPoi);
 		
 		JPanel panelEditButtonAction = new JPanel();
 		panelEdition.add(panelEditButtonAction);
 		
-		JButton button = new JButton("MODIF");
-		panelEditButtonAction.add(button);
+		btnADD = new JButton("ADD");
+		btnADD.setEnabled(false);
+		panelEditButtonAction.add(btnADD);
 		
-		JButton button_1 = new JButton("DELETE");
-		panelEditButtonAction.add(button_1);
+		btnMODIF = new JButton("MODIF");
+		btnMODIF.setEnabled(false);
+		panelEditButtonAction.add(btnMODIF);
 		
-		JButton button_2 = new JButton("ADD");
-		panelEditButtonAction.add(button_2);
+		btnDELETE = new JButton("DELETE");
+		btnDELETE.setEnabled(false);
+		panelEditButtonAction.add(btnDELETE);
 		
 		JPanel panelEditPart = new JPanel();
 		panelEdition.add(panelEditPart);
@@ -221,22 +683,22 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditChoixLieu = new JPanel();
 		panelEditComboBox.add(panelEditChoixLieu);
 		
-		JLabel label_1 = new JLabel("Choix Lieu :");
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditChoixLieu.add(label_1);
+		labelFirstCombobox = new JLabel("Choix Lieu :");
+		labelFirstCombobox.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditChoixLieu.add(labelFirstCombobox);
 		
-		JComboBox comboBox = new JComboBox();
-		panelEditChoixLieu.add(comboBox);
+		comboBoxFirst = new JComboBox();
+		panelEditChoixLieu.add(comboBoxFirst);
 		
 		JPanel panelEditChoixType = new JPanel();
 		panelEditComboBox.add(panelEditChoixType);
 		
-		JLabel label_2 = new JLabel("Choix [Type] :");
-		label_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditChoixType.add(label_2);
+		labelSecondComboBox = new JLabel("Choix [Type] :");
+		labelSecondComboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditChoixType.add(labelSecondComboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panelEditChoixType.add(comboBox_1);
+		comboBoxSecond = new JComboBox();
+		panelEditChoixType.add(comboBoxSecond);
 		
 		JPanel panelEditTextBox = new JPanel();
 		panelEditPart.add(panelEditTextBox);
@@ -245,7 +707,7 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditTextBoxLibelle = new JPanel();
 		panelEditTextBox.add(panelEditTextBoxLibelle);
 		
-		JLabel labelLibelle = new JLabel("Libelle :");
+		labelLibelle = new JLabel("Libelle :");
 		labelLibelle.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelEditTextBoxLibelle.add(labelLibelle);
 		
@@ -256,7 +718,7 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditTextBoxDescription = new JPanel();
 		panelEditTextBox.add(panelEditTextBoxDescription);
 		
-		JLabel labelDescription = new JLabel("Description :");
+		labelDescription = new JLabel("Description :");
 		labelDescription.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelEditTextBoxDescription.add(labelDescription);
 		
@@ -267,7 +729,7 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditTextBoxImage = new JPanel();
 		panelEditTextBox.add(panelEditTextBoxImage);
 		
-		JLabel labelImage = new JLabel("Image :");
+		labelImage = new JLabel("Image :");
 		labelImage.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelEditTextBoxImage.add(labelImage);
 		
@@ -278,32 +740,32 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditPosition = new JPanel();
 		panelEditPart.add(panelEditPosition);
 		
-		JButton btnPosition = new JButton("POSITION");
+		btnPosition = new JButton("POSITION");
 		panelEditPosition.add(btnPosition);
 		
-		JLabel label_6 = new JLabel("X");
-		label_6.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelEditPosition.add(label_6);
+		labelPosX = new JLabel("X");
+		labelPosX.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panelEditPosition.add(labelPosX);
 		
-		JLabel label_7 = new JLabel("-");
-		label_7.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelEditPosition.add(label_7);
+		labelSeparator = new JLabel("-");
+		labelSeparator.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelEditPosition.add(labelSeparator);
 		
-		JLabel label_8 = new JLabel("Y");
-		label_8.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelEditPosition.add(label_8);
+		labelPosY = new JLabel("Y");
+		labelPosY.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panelEditPosition.add(labelPosY);
 		
 		JPanel panelEditChoixPOI = new JPanel();
 		panelEditPart.add(panelEditChoixPOI);
 		
-		JLabel label_9 = new JLabel("Choix POI :");
-		label_9.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelEditChoixPOI.add(label_9);
+		labelChoixPOI = new JLabel("Choix POI :");
+		labelChoixPOI.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelEditChoixPOI.add(labelChoixPOI);
 		
-		JComboBox comboBoxChoixPOI = new JComboBox();
+		comboBoxChoixPOI = new JComboBox();
 		panelEditChoixPOI.add(comboBoxChoixPOI);
 		
-		JButton buttonPlus = new JButton("+");
+		buttonPlus = new JButton("+");
 		buttonPlus.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panelEditChoixPOI.add(buttonPlus);
 		
@@ -311,7 +773,7 @@ public class MyJFrame extends JFrame {
 		panelEditPart.add(panelEditListPOI);
 		
 		
-		JButton btnRemove = new JButton("REMOVE");
+		btnRemove = new JButton("REMOVE");
 		panelEditListPOI.add(btnRemove);
 		
 		JPanel panelEditButtonBot = new JPanel();
@@ -321,15 +783,15 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditButtonValidate = new JPanel();
 		panelEditButtonBot.add(panelEditButtonValidate);
 		
-		JButton button_6 = new JButton("VALIDER");
-		button_6.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditButtonValidate.add(button_6);
+		JButton buttonValidate = new JButton("VALIDER");
+		buttonValidate.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditButtonValidate.add(buttonValidate);
 		
 		JPanel panelEditButtonCancel = new JPanel();
 		panelEditButtonBot.add(panelEditButtonCancel);
 		
-		JButton button_7 = new JButton("ANNULER");
-		panelEditButtonCancel.add(button_7);
+		JButton buttonCancel = new JButton("ANNULER");
+		panelEditButtonCancel.add(buttonCancel);
 
 		//FIN
 		
@@ -369,6 +831,13 @@ public class MyJFrame extends JFrame {
 		btnGoParcours = new JButton("Go");
 		
 		panelMenu.add(btnGoParcours);
+	}
+	
+	public void setButtonAction(boolean etat)
+	{
+		btnADD.setEnabled(etat);
+		btnMODIF.setEnabled(etat);
+		btnDELETE.setEnabled(etat);
 	}
 	
 	public void afficherPOI()
@@ -430,6 +899,8 @@ public class MyJFrame extends JFrame {
 	
 	public void newListeners()
 	{
+		
+	//PARTIE CONSULTATION ################################
 	//LISTENERS - ItemStateChanged
 		//ComboBoxLieu
 		comboBoxLieu.addItemListener(new ItemListener() {
@@ -492,32 +963,12 @@ public class MyJFrame extends JFrame {
 				{
 					if ((e.getButton() == 1) && listOval.get(i).contains(e.getX(), e.getY()))
 					{
-//						listIdPOI.get(i);
-//						listNamePoi.get(i);
-//						listDescriptionPoi.get(i);
-						//((MyJPanelMap) panelMAP).setListPopUpOn(i, changeBoolean(listPopUpOn.get(i)));
-						System.out.println("YO");
+						System.out.println(listDescriptionPoi.get(i));
+						System.out.println(listNamePoi.get(i));
 						lblTitre.setText(listNamePoi.get(i));
 						lblDescription.setText(listDescriptionPoi.get(i));
 					}
 				}
-				
-				
-//				double ratioX = (double) ((MyJPanelMap) panelMAP).getWidthPanelMap()/originWidht;
-//				double ratioY = (double) ((MyJPanelMap) panelMAP).getHeightPanelMap()/originHeight;
-//				
-//				double newX = e.getX() / ratioX;
-//				double newY = e.getY() / ratioY;
-//				
-//				//((MyJPanelMap) panelMAP).getHeightPanelMap();
-//				System.out.println("widthPanelMap = "+widthPanelMap);
-//				System.out.println("originWidht = "+originWidht);
-//				System.out.println("ratio = "+ratioX);
-//				System.out.println("newX = "+(int)newX+" : ");
-//				
-//				((MyJPanelMap) panelMAP).setPositionMouse((int)newX, (int) newY);
-//				//panelMAP.paintComponents(getGraphics());
-//				repaint();s
 			}
 		});
 		
@@ -528,5 +979,51 @@ public class MyJFrame extends JFrame {
 				
 			}
 		});
+		//PARTIE EDITION ################################
+		//STEP 1
+		btnLieu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setTypeSelected(1);
+				setButtonAction(true);
+			}
+		});
+		
+		btnParcours.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setTypeSelected(2);
+				setButtonAction(true);
+			}
+		});
+		btnPoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setTypeSelected(3);
+				setButtonAction(true);
+			}
+		});
+		
+		//STEP 2
+		
+		btnADD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(1));
+			}
+		});
+		btnMODIF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(2));
+				
+			}
+		});
+		btnDELETE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(3));
+			}
+		});
+		
+		
+		
+		
 	}
+
+	
 }

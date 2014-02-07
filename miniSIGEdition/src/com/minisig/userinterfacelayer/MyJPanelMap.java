@@ -121,6 +121,7 @@ public class MyJPanelMap extends JPanel {
 		}
 		if(boutonGoLieuClicked == true)
 		{
+			listOval.removeAll(listOval);
 			for(int i = 0; i < listX.size() ; i++)
 			{
 				if(listIsInParcours.get(i)){g.setColor(Color.red);}
@@ -131,7 +132,5 @@ public class MyJPanelMap extends JPanel {
 				listOval.add(oval);
 			}
 		}
-		
-
 	}
 }
