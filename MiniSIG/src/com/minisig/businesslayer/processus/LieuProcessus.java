@@ -84,19 +84,17 @@ public class LieuProcessus {
 			e.printStackTrace();
 		}
 	}
-	public void removeLieu(String nameLieu, String descriptionLieu, String imageUrlLieu){
-		Lieu lieuToDeleteLieu = new Lieu(nameLieu, descriptionLieu, imageUrlLieu);
+	public void removeLieu(String nameLieu){
 		DAO dao = null;
 		dao = new LieuDAO();
 		try {
-			dao.removeObject(lieuToDeleteLieu);
+			dao.removeObject(GetObject(getIdForNameLieu(nameLieu)));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	public void updateLieu(String InputNameLieu, String inputDescriptionLieu, String InputImageUrlLieu, String OutputNameLieu, 
-			String OutputDescriptionLieu, String OutputimageUrlLieu){
-		Lieu lieuToUpdate = new Lieu(InputNameLieu, inputDescriptionLieu, InputImageUrlLieu);
+	public void updateLieu(String InputNameLieu, String OutputNameLieu, String OutputDescriptionLieu, String OutputimageUrlLieu){
+		Lieu lieuToUpdate = GetObject(getIdForNameLieu(InputNameLieu));
 		Lieu lieuToFill = new Lieu(OutputNameLieu, OutputDescriptionLieu, OutputimageUrlLieu);
 		DAO dao = null;
 		dao = new LieuDAO();
