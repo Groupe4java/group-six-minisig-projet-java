@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,12 +13,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -47,8 +49,8 @@ public class MyJFrame extends JFrame {
 	String pathFound;
 	JPanel panelTitle;
 	JPanel panelDescription;
-	JLabel lblTitre;
-	JLabel lblDescription;
+	JLabel lblLibellePOI;
+	JLabel lblDescriptionPOI;
 	JComboBox comboBoxLieu;
 	JComboBox comboBoxParcours;
 	JButton btnGoLieu;
@@ -56,42 +58,45 @@ public class MyJFrame extends JFrame {
 	JButton btnPrevious;
 	JButton btnNext;
 	JButton btnRemove;
-	JLabel labelPosX;
-	JLabel labelPosY;
-	JLabel labelSeparator;
-	JButton buttonValidate;
-	JButton buttonCancel;
-	JButton btnSearchImage;
+	String absolutePathPOI = null;
 	
-	JLabel labelChoixPOI;
-	JComboBox comboBoxChoixPOI;
-	JButton buttonPlus;
-	JLabel labelTypeEDIT;
-	JLabel labelFirstCombobox;
-	JComboBox comboBoxFirst;
-	JLabel labelSecondComboBox;
-	JComboBox comboBoxSecond;
 	
-	JButton btnPosition;
+	//CONSULTATION
+	
+	String imagePOI = null;
+	//EDITION
+	JLabel lblTypeEDIT;
 	
 	JButton btnLieu;
 	JButton btnParcours;
 	JButton btnPoi;
-	
 	JButton btnMODIF;
 	JButton btnDELETE;
 	JButton btnADD;
 	
-	JLabel labelLibelle;
-	JLabel labelDescription;
-	JLabel labelImage;
+	JLabel lblFirstCombobox;
+	JComboBox comboBoxFirst;
+	JLabel lblSecondComboBox;
+	JComboBox comboBoxSecond;
 	
+	JLabel lblChoixPOI;
+	JLabel lblPosX;
+	JLabel lblPosY;
+	JLabel lblSeparator;
+	JLabel lblLibelleEDIT;
+	JLabel lblDescriptionEDIT;
+	JLabel lblImageEDIT;
 	
+	JButton btnValidate;
+	JButton btnCancel;
+	JButton btnSearchImage;
+	
+	JComboBox comboBoxChoixPOI;
+	JButton btnPlus;
+	JButton btnPosition;
 	
 	int typeSelected;		//1 = Lieu, 2 = Parcours, 3 = POI
 	int actionSelected;		//1 = ADD, 2 = MODIF, 3 = DELETE
-	
-	
 
 	int originWidht = 512;
 	int originHeight = 408;
@@ -109,6 +114,7 @@ public class MyJFrame extends JFrame {
 	ArrayList<Integer> listIdPOI;
 	ArrayList<String> listNamePoi;
 	ArrayList<String> listDescriptionPoi;
+	ArrayList<String> listImagePoi;
 	ArrayList<Boolean> listIsInParcours;
 	ArrayList<Boolean> listPopUpOn;
 	
@@ -134,7 +140,6 @@ public class MyJFrame extends JFrame {
 	public void setTypeSelected(int typeSelected) {
 		this.typeSelected = typeSelected;
 	}
-
 	
 	public void setEtatComponent(String textTitle, boolean bLblFirstCombobox, boolean bFirstCombobox,
 			boolean bLblSecondCombobox, boolean bSecondCombobox, boolean bLblLibelle, boolean bTFLibelle, 
@@ -143,29 +148,29 @@ public class MyJFrame extends JFrame {
 			boolean bLblChoixPOI, boolean bComboBoxChoixPOI, boolean bBtnPlus,
 			boolean bBtnRemove, boolean bBtnValidate, boolean bBtnCancel, boolean bBtnSearchImage)
 	{
-		labelTypeEDIT.setText(textTitle);
-		labelFirstCombobox.setEnabled(bLblFirstCombobox);
-		labelFirstCombobox.setVisible(bLblFirstCombobox);
+		lblTypeEDIT.setText(textTitle);
+		lblFirstCombobox.setEnabled(bLblFirstCombobox);
+		lblFirstCombobox.setVisible(bLblFirstCombobox);
 		comboBoxFirst.setEnabled(bFirstCombobox);
 		comboBoxFirst.setVisible(bFirstCombobox);
 		
-		labelSecondComboBox.setEnabled(bLblSecondCombobox);
-		labelSecondComboBox.setVisible(bLblSecondCombobox);
+		lblSecondComboBox.setEnabled(bLblSecondCombobox);
+		lblSecondComboBox.setVisible(bLblSecondCombobox);
 		comboBoxSecond.setEnabled(bSecondCombobox);
 		comboBoxSecond.setVisible(bSecondCombobox);
 		
-		labelLibelle.setEnabled(bLblLibelle);
-		labelLibelle.setVisible(bLblLibelle);
+		lblLibelleEDIT.setEnabled(bLblLibelle);
+		lblLibelleEDIT.setVisible(bLblLibelle);
 		textFieldLibelle.setEnabled(bTFLibelle);
 		textFieldLibelle.setVisible(bTFLibelle);
 		
-		labelDescription.setEnabled(bLblDescription);
-		labelDescription.setVisible(bLblDescription);
+		lblDescriptionEDIT.setEnabled(bLblDescription);
+		lblDescriptionEDIT.setVisible(bLblDescription);
 		textFieldDescription.setEnabled(bTFDescription);
 		textFieldDescription.setVisible(bTFDescription);
 		
-		labelImage.setEnabled(bLblImage);
-		labelImage.setVisible(bLblImage);
+		lblImageEDIT.setEnabled(bLblImage);
+		lblImageEDIT.setVisible(bLblImage);
 		textFieldImage.setEnabled(bTFImage);
 		textFieldImage.setVisible(bTFImage);
 		
@@ -174,26 +179,26 @@ public class MyJFrame extends JFrame {
 		
 		btnPosition.setEnabled(bBtnPosition);
 		btnPosition.setVisible(bBtnPosition);
-		labelPosX.setEnabled(bLblPosX);
-		labelPosX.setVisible(bLblPosX);
-		labelSeparator.setEnabled(bLblSeparator);
-		labelSeparator.setVisible(bLblSeparator);
-		labelPosY.setEnabled(bLblposY);
-		labelPosY.setVisible(bLblposY);
+		lblPosX.setEnabled(bLblPosX);
+		lblPosX.setVisible(bLblPosX);
+		lblSeparator.setEnabled(bLblSeparator);
+		lblSeparator.setVisible(bLblSeparator);
+		lblPosY.setEnabled(bLblposY);
+		lblPosY.setVisible(bLblposY);
 		
-		labelChoixPOI.setEnabled(bLblChoixPOI);
-		labelChoixPOI.setVisible(bLblChoixPOI);
+		lblChoixPOI.setEnabled(bLblChoixPOI);
+		lblChoixPOI.setVisible(bLblChoixPOI);
 		comboBoxChoixPOI.setEnabled(bComboBoxChoixPOI);
 		comboBoxChoixPOI.setVisible(bComboBoxChoixPOI);
-		buttonPlus.setEnabled(bBtnPlus);
-		buttonPlus.setVisible(bBtnPlus);
+		btnPlus.setEnabled(bBtnPlus);
+		btnPlus.setVisible(bBtnPlus);
 		
 		btnRemove.setEnabled(bBtnRemove);
 		btnRemove.setVisible(bBtnRemove);
-		buttonValidate.setEnabled(bBtnValidate);
-		buttonValidate.setVisible(bBtnValidate);
-		buttonCancel.setEnabled(bBtnCancel);
-		buttonCancel.setVisible(bBtnCancel);
+		btnValidate.setEnabled(bBtnValidate);
+		btnValidate.setVisible(bBtnValidate);
+		btnCancel.setEnabled(bBtnCancel);
+		btnCancel.setVisible(bBtnCancel);
 	}
 	
 	public void setEtatEditComponent(String actionSelected, String typeSelected) {//GERE L'AFFICHAGE DES ELEMENTS EDITIONS
@@ -310,29 +315,43 @@ public class MyJFrame extends JFrame {
 		JPanel panelTitle = new JPanel();
 		panelPoiCENTER.add(panelTitle);
 		
-		lblTitre = new JLabel("Titre");
-		lblTitre.setPreferredSize(new Dimension(150,50));
-		lblTitre.setVerticalAlignment(SwingConstants.TOP);
-		lblTitre.setHorizontalAlignment(SwingConstants.LEFT);
-		panelTitle.add(lblTitre);
+		lblLibellePOI = new JLabel("Titre");
+		lblLibellePOI.setPreferredSize(new Dimension(150,50));
+		lblLibellePOI.setVerticalAlignment(SwingConstants.TOP);
+		lblLibellePOI.setHorizontalAlignment(SwingConstants.LEFT);
+		panelTitle.add(lblLibellePOI);
 		
 		JPanel panelDescription = new JPanel();
 		panelPoiCENTER.add(panelDescription);
 		
-		lblDescription = new JLabel("Description");
-		lblDescription.setPreferredSize(new Dimension(150,50));
-		lblDescription.setVerticalAlignment(SwingConstants.TOP);
-		lblDescription.setHorizontalAlignment(SwingConstants.LEFT);
-		panelDescription.add(lblDescription);
+		lblDescriptionPOI = new JLabel("Description");
+		lblDescriptionPOI.setPreferredSize(new Dimension(150,50));
+		lblDescriptionPOI.setVerticalAlignment(SwingConstants.TOP);
+		lblDescriptionPOI.setHorizontalAlignment(SwingConstants.LEFT);
+		panelDescription.add(lblDescriptionPOI);
 		
-		JPanel panelImage = new JPanel();
+		JPanel panelImage = new JPanel(){
+			public void paintComponent(Graphics g){
+				try 
+				{
+					imagePOI = absolutePathPOI;
+					if(imagePOI != null){
+					Image img = ImageIO.read(new File(imagePOI));
+					g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+					} 
+				}
+				catch (IOException e) 
+				{
+				e.printStackTrace();
+				}
+			}
+		};
+		panelImage.setPreferredSize(new Dimension(100, 200));
+		
 		panelPoiCENTER.add(panelImage);
 		
 		JPanel panelPoiSOUTH = new JPanel();
 		panelPOI.add(panelPoiSOUTH);
-		
-		Component verticalStrut = Box.createVerticalStrut(20);
-		panelPoiSOUTH.add(verticalStrut);
 		
 		//Panel Edition
 		JPanel panelEdition = new JPanel();
@@ -344,8 +363,8 @@ public class MyJFrame extends JFrame {
 		panelEditTitle.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelEdition.add(panelEditTitle);
 		
-		labelTypeEDIT = new JLabel("EDITION");
-		panelEditTitle.add(labelTypeEDIT);
+		lblTypeEDIT = new JLabel("EDITION");
+		panelEditTitle.add(lblTypeEDIT);
 		
 		JPanel panelEditButtonTopType = new JPanel();
 		//panelEditButtonTopType.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -386,9 +405,9 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditChoixLieu = new JPanel();
 		panelEditComboBox.add(panelEditChoixLieu);
 		
-		labelFirstCombobox = new JLabel("Choix Lieu :");
-		labelFirstCombobox.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditChoixLieu.add(labelFirstCombobox);
+		lblFirstCombobox = new JLabel("Choix Lieu :");
+		lblFirstCombobox.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditChoixLieu.add(lblFirstCombobox);
 		
 		comboBoxFirst = new JComboBox();
 		panelEditChoixLieu.add(comboBoxFirst);
@@ -396,9 +415,9 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditChoixType = new JPanel();
 		panelEditComboBox.add(panelEditChoixType);
 		
-		labelSecondComboBox = new JLabel("Choix [Type] :");
-		labelSecondComboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditChoixType.add(labelSecondComboBox);
+		lblSecondComboBox = new JLabel("Choix [Type] :");
+		lblSecondComboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditChoixType.add(lblSecondComboBox);
 		
 		comboBoxSecond = new JComboBox();
 		panelEditChoixType.add(comboBoxSecond);
@@ -410,9 +429,9 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditTextBoxLibelle = new JPanel();
 		panelEditTextBox.add(panelEditTextBoxLibelle);
 		
-		labelLibelle = new JLabel("Libelle :");
-		labelLibelle.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditTextBoxLibelle.add(labelLibelle);
+		lblLibelleEDIT = new JLabel("Libelle :");
+		lblLibelleEDIT.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditTextBoxLibelle.add(lblLibelleEDIT);
 		
 		textFieldLibelle = new JTextField();
 		textFieldLibelle.setColumns(10);
@@ -421,9 +440,9 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditTextBoxDescription = new JPanel();
 		panelEditTextBox.add(panelEditTextBoxDescription);
 		
-		labelDescription = new JLabel("Description :");
-		labelDescription.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditTextBoxDescription.add(labelDescription);
+		lblDescriptionEDIT = new JLabel("Description :");
+		lblDescriptionEDIT.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditTextBoxDescription.add(lblDescriptionEDIT);
 		
 		textFieldDescription = new JTextField();
 		textFieldDescription.setColumns(10);
@@ -432,9 +451,9 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditTextBoxImage = new JPanel();
 		panelEditTextBox.add(panelEditTextBoxImage);
 		
-		labelImage = new JLabel("Image :");
-		labelImage.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditTextBoxImage.add(labelImage);
+		lblImageEDIT = new JLabel("Image :");
+		lblImageEDIT.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditTextBoxImage.add(lblImageEDIT);
 		
 		textFieldImage = new JTextField();
 		textFieldImage.setColumns(10);
@@ -450,31 +469,31 @@ public class MyJFrame extends JFrame {
 		btnPosition = new JButton("POSITION");
 		panelEditPosition.add(btnPosition);
 		
-		labelPosX = new JLabel("X");
-		labelPosX.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelEditPosition.add(labelPosX);
+		lblPosX = new JLabel("X");
+		lblPosX.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panelEditPosition.add(lblPosX);
 		
-		labelSeparator = new JLabel("-");
-		labelSeparator.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelEditPosition.add(labelSeparator);
+		lblSeparator = new JLabel("-");
+		lblSeparator.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelEditPosition.add(lblSeparator);
 		
-		labelPosY = new JLabel("Y");
-		labelPosY.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelEditPosition.add(labelPosY);
+		lblPosY = new JLabel("Y");
+		lblPosY.setFont(new Font("Tahoma", Font.BOLD, 14));
+		panelEditPosition.add(lblPosY);
 		
 		JPanel panelEditChoixPOI = new JPanel();
 		panelEditPart.add(panelEditChoixPOI);
 		
-		labelChoixPOI = new JLabel("Choix POI :");
-		labelChoixPOI.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelEditChoixPOI.add(labelChoixPOI);
+		lblChoixPOI = new JLabel("Choix POI :");
+		lblChoixPOI.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelEditChoixPOI.add(lblChoixPOI);
 		
 		comboBoxChoixPOI = new JComboBox();
 		panelEditChoixPOI.add(comboBoxChoixPOI);
 		
-		buttonPlus = new JButton("+");
-		buttonPlus.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelEditChoixPOI.add(buttonPlus);
+		btnPlus = new JButton("+");
+		btnPlus.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelEditChoixPOI.add(btnPlus);
 		
 		JPanel panelEditListPOI = new JPanel();
 		panelEditPart.add(panelEditListPOI);
@@ -490,15 +509,15 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditButtonValidate = new JPanel();
 		panelEditButtonBot.add(panelEditButtonValidate);
 		
-		buttonValidate = new JButton("VALIDER");
-		buttonValidate.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelEditButtonValidate.add(buttonValidate);
+		btnValidate = new JButton("VALIDER");
+		btnValidate.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelEditButtonValidate.add(btnValidate);
 		
 		JPanel panelEditButtonCancel = new JPanel();
 		panelEditButtonBot.add(panelEditButtonCancel);
 		
-		buttonCancel = new JButton("ANNULER");
-		panelEditButtonCancel.add(buttonCancel);
+		btnCancel = new JButton("ANNULER");
+		panelEditButtonCancel.add(btnCancel);
 
 		//FIN
 		
@@ -553,6 +572,7 @@ public class MyJFrame extends JFrame {
 		listPopUpOn = new ArrayList<>();
 		listIdPOI = new ArrayList<>();
 		listNamePoi = new ArrayList<>();
+		listImagePoi = new ArrayList<>();
 		listDescriptionPoi = new ArrayList<>();
 		
 		listPOI = null;
@@ -568,6 +588,7 @@ public class MyJFrame extends JFrame {
 			listY.add(p.getYPOI());
 			listIdPOI.add(p.getIdPOI());
 			listNamePoi.add(p.getLibellePOI());
+			listImagePoi.add(p.getImagePOI());
 			listDescriptionPoi.add(p.getDescriptionPOI());
 			
 			if(boutonParcoursClicked)
@@ -669,46 +690,34 @@ public class MyJFrame extends JFrame {
 					{
 						System.out.println(listDescriptionPoi.get(i));
 						System.out.println(listNamePoi.get(i));
-						lblTitre.setText(listNamePoi.get(i));
-						lblDescription.setText(listDescriptionPoi.get(i));
+						lblLibellePOI.setText(listNamePoi.get(i));
+						lblDescriptionPOI.setText(listDescriptionPoi.get(i));
+						absolutePathPOI = listImagePoi.get(i);
+						repaint();
 					}
 				}
 			}
 		});
 		
-	//LISTENERS - MouseMotion on MAP
-		panelMAP.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent arg0) {
-				
-			}
-		});
-		//PARTIE EDITION ##########################################################
-		
-		buttonCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setButtonAction(false);
-				setEtatEditComponent("9","9");
-				labelTypeEDIT.setText("EDITION");
-			}
-		});
-		
-		//STEP 1
+
+//################################################################################
+//######################     PARTIE EDITION     ##################################
+//################################################################################
+		//Choix de la donnée à Modifier
 		btnLieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setTypeSelected(1);
 				setButtonAction(true);
 				setEtatEditComponent("9","0");
-				labelTypeEDIT.setText("LIEU");
+				lblTypeEDIT.setText("LIEU");
 			}
 		});
-		
 		btnParcours.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setTypeSelected(2);
 				setButtonAction(true);
 				setEtatEditComponent("9","0");
-				labelTypeEDIT.setText("PARCOURS");
+				lblTypeEDIT.setText("PARCOURS");
 			}
 		});
 		btnPoi.addActionListener(new ActionListener() {
@@ -716,12 +725,11 @@ public class MyJFrame extends JFrame {
 				setTypeSelected(3);
 				setButtonAction(true);
 				setEtatEditComponent("9","0");
-				labelTypeEDIT.setText("POI");
+				lblTypeEDIT.setText("POI");
 			}
 		});
 		
-		//STEP 2
-		
+		//Choix de l'action d'Edition
 		btnADD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(1));
@@ -747,8 +755,24 @@ public class MyJFrame extends JFrame {
 				chooser.showOpenDialog(null);
 				File selectedPfile = chooser.getSelectedFile();
 				System.out.println(selectedPfile.getAbsolutePath());
-				pathFound = selectedPfile.getAbsolutePath();
+				absolutePathPOI = selectedPfile.getAbsolutePath();
 				textFieldImage.setText(selectedPfile.getAbsolutePath());
+			}
+		});
+		
+		
+		
+		btnValidate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setButtonAction(false);
+				setEtatEditComponent("9","9");
+				lblTypeEDIT.setText("EDITION");
 			}
 		});
 		

@@ -24,8 +24,8 @@ public class MyJPanelMap extends JPanel {
 
 	String mapLieu = null;
 	int nombrePOI;
-	int originWidht = 512;
-	int originHeight = 408;
+	int originWidht = 426;
+	int originHeight = 457;
 	Graphics2D g2d;
 	public Graphics2D getG2d() {
 		return g2d;
@@ -108,14 +108,8 @@ public class MyJPanelMap extends JPanel {
 		g2d = (Graphics2D) g;
 		try 
 		{
-			
 			if(mapLieu != null){
-			//Création de l'objet Image
 			Image img = ImageIO.read(new File(mapLieu));
-			//String test = "D:\Users\Gaëtan\Pictures\imageTourEiffel.jpeg";
-			//test.replace("\\", "\\\\")
-			//System.out.println("D:\Users\Gaëtan\Pictures\imageTourEiffel.jpeg");
-			//Draw l'image avec comme taille, la taille du panel
 			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 			} 
 		}
