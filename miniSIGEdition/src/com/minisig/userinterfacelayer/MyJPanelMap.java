@@ -112,6 +112,9 @@ public class MyJPanelMap extends JPanel {
 			if(mapLieu != null){
 			//Création de l'objet Image
 			Image img = ImageIO.read(new File(mapLieu));
+			//String test = "D:\Users\Gaëtan\Pictures\imageTourEiffel.jpeg";
+			//test.replace("\\", "\\\\")
+			//System.out.println("D:\Users\Gaëtan\Pictures\imageTourEiffel.jpeg");
 			//Draw l'image avec comme taille, la taille du panel
 			g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 			} 

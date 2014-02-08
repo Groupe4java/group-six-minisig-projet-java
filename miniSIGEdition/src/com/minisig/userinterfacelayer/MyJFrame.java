@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,6 +43,8 @@ public class MyJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panelMAP;
+	
+	String pathFound;
 	JPanel panelTitle;
 	JPanel panelDescription;
 	JLabel lblTitre;
@@ -57,7 +61,8 @@ public class MyJFrame extends JFrame {
 	JLabel labelSeparator;
 	JButton buttonValidate;
 	JButton buttonCancel;
-
+	JButton btnSearchImage;
+	
 	JLabel labelChoixPOI;
 	JComboBox comboBoxChoixPOI;
 	JButton buttonPlus;
@@ -130,6 +135,67 @@ public class MyJFrame extends JFrame {
 		this.typeSelected = typeSelected;
 	}
 
+	
+	public void setEtatComponent(String textTitle, boolean bLblFirstCombobox, boolean bFirstCombobox,
+			boolean bLblSecondCombobox, boolean bSecondCombobox, boolean bLblLibelle, boolean bTFLibelle, 
+			boolean bLblDescription, boolean bTFDescription, boolean bLblImage, boolean bTFImage,
+			boolean bBtnPosition, boolean bLblPosX, boolean bLblSeparator, boolean bLblposY, 
+			boolean bLblChoixPOI, boolean bComboBoxChoixPOI, boolean bBtnPlus,
+			boolean bBtnRemove, boolean bBtnValidate, boolean bBtnCancel, boolean bBtnSearchImage)
+	{
+		labelTypeEDIT.setText(textTitle);
+		labelFirstCombobox.setEnabled(bLblFirstCombobox);
+		labelFirstCombobox.setVisible(bLblFirstCombobox);
+		comboBoxFirst.setEnabled(bFirstCombobox);
+		comboBoxFirst.setVisible(bFirstCombobox);
+		
+		labelSecondComboBox.setEnabled(bLblSecondCombobox);
+		labelSecondComboBox.setVisible(bLblSecondCombobox);
+		comboBoxSecond.setEnabled(bSecondCombobox);
+		comboBoxSecond.setVisible(bSecondCombobox);
+		
+		labelLibelle.setEnabled(bLblLibelle);
+		labelLibelle.setVisible(bLblLibelle);
+		textFieldLibelle.setEnabled(bTFLibelle);
+		textFieldLibelle.setVisible(bTFLibelle);
+		
+		labelDescription.setEnabled(bLblDescription);
+		labelDescription.setVisible(bLblDescription);
+		textFieldDescription.setEnabled(bTFDescription);
+		textFieldDescription.setVisible(bTFDescription);
+		
+		labelImage.setEnabled(bLblImage);
+		labelImage.setVisible(bLblImage);
+		textFieldImage.setEnabled(bTFImage);
+		textFieldImage.setVisible(bTFImage);
+		
+		btnSearchImage.setEnabled(bBtnSearchImage);
+		btnSearchImage.setVisible(bBtnSearchImage);
+		
+		btnPosition.setEnabled(bBtnPosition);
+		btnPosition.setVisible(bBtnPosition);
+		labelPosX.setEnabled(bLblPosX);
+		labelPosX.setVisible(bLblPosX);
+		labelSeparator.setEnabled(bLblSeparator);
+		labelSeparator.setVisible(bLblSeparator);
+		labelPosY.setEnabled(bLblposY);
+		labelPosY.setVisible(bLblposY);
+		
+		labelChoixPOI.setEnabled(bLblChoixPOI);
+		labelChoixPOI.setVisible(bLblChoixPOI);
+		comboBoxChoixPOI.setEnabled(bComboBoxChoixPOI);
+		comboBoxChoixPOI.setVisible(bComboBoxChoixPOI);
+		buttonPlus.setEnabled(bBtnPlus);
+		buttonPlus.setVisible(bBtnPlus);
+		
+		btnRemove.setEnabled(bBtnRemove);
+		btnRemove.setVisible(bBtnRemove);
+		buttonValidate.setEnabled(bBtnValidate);
+		buttonValidate.setVisible(bBtnValidate);
+		buttonCancel.setEnabled(bBtnCancel);
+		buttonCancel.setVisible(bBtnCancel);
+	}
+	
 	public void setEtatEditComponent(String actionSelected, String typeSelected) {//GERE L'AFFICHAGE DES ELEMENTS EDITIONS
 		String action = actionSelected + typeSelected;
 		System.out.println(action);
@@ -137,555 +203,40 @@ public class MyJFrame extends JFrame {
 		switch(action)
 		{
 		case "11": //LIEU - ADD
-			labelTypeEDIT.setText("LIEU - AJOUT");
-			labelFirstCombobox.setEnabled(false);
-			labelFirstCombobox.setVisible(false);
-			comboBoxFirst.setEnabled(false);
-			comboBoxFirst.setVisible(false);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(true);
-			labelLibelle.setVisible(true);
-			textFieldLibelle.setEnabled(true);
-			textFieldLibelle.setVisible(true);
-			
-			labelDescription.setEnabled(true);
-			labelDescription.setVisible(true);
-			textFieldDescription.setEnabled(true);
-			textFieldDescription.setVisible(true);
-			
-			labelImage.setEnabled(true);
-			labelImage.setVisible(true);
-			textFieldImage.setEnabled(true);
-			textFieldImage.setVisible(true);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("LIEU - AJOUT", false,false,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false,false,true,true, true);
 			break;
 		case "12": //LIEU - MODIF
-			labelTypeEDIT.setText("LIEU - MODIFICATION");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(true);
-			labelLibelle.setVisible(true);
-			textFieldLibelle.setEnabled(true);
-			textFieldLibelle.setVisible(true);
-			
-			labelDescription.setEnabled(true);
-			labelDescription.setVisible(true);
-			textFieldDescription.setEnabled(true);
-			textFieldDescription.setVisible(true);
-			
-			labelImage.setEnabled(true);
-			labelImage.setVisible(true);
-			textFieldImage.setEnabled(true);
-			textFieldImage.setVisible(true);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("LIEU - MODIFICATION", true,true,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false,false,true,true, true);
 			break;
 		case "13": //LIEU - DELETE
-			labelTypeEDIT.setText("LIEU - SUPPRESSION");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(false);
-			labelLibelle.setVisible(false);
-			textFieldLibelle.setEnabled(false);
-			textFieldLibelle.setVisible(false);
-			
-			labelDescription.setEnabled(false);
-			labelDescription.setVisible(false);
-			textFieldDescription.setEnabled(false);
-			textFieldDescription.setVisible(false);
-			
-			labelImage.setEnabled(false);
-			labelImage.setVisible(false);
-			textFieldImage.setEnabled(false);
-			textFieldImage.setVisible(false);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("LIEU - SUPPRESSION", true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false);
 			break;
 		case "21": //PARCOURS - ADD
-			labelTypeEDIT.setText("PARCOURS - AJOUT");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(true);
-			labelLibelle.setVisible(true);
-			textFieldLibelle.setEnabled(true);
-			textFieldLibelle.setVisible(true);
-			
-			labelDescription.setEnabled(true);
-			labelDescription.setVisible(true);
-			textFieldDescription.setEnabled(true);
-			textFieldDescription.setVisible(true);
-			
-			labelImage.setEnabled(false);
-			labelImage.setVisible(false);
-			textFieldImage.setEnabled(false);
-			textFieldImage.setVisible(false);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(true);
-			labelChoixPOI.setVisible(true);
-			comboBoxChoixPOI.setEnabled(true);
-			comboBoxChoixPOI.setVisible(true);
-			buttonPlus.setEnabled(true);
-			buttonPlus.setVisible(true);
-			
-			btnRemove.setEnabled(true);
-			btnRemove.setVisible(true);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("PARCOURS - AJOUT", true,true,false,false,true,true,true,true,false,false,false,false,false,false,true,true,true,true,true,true, false);
 			break;
 		case "22": //PARCOURS - MODIF
-			labelTypeEDIT.setText("PARCOURS - MODIFICATION");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(true);
-			labelLibelle.setVisible(true);
-			textFieldLibelle.setEnabled(true);
-			textFieldLibelle.setVisible(true);
-			
-			labelDescription.setEnabled(true);
-			labelDescription.setVisible(true);
-			textFieldDescription.setEnabled(true);
-			textFieldDescription.setVisible(true);
-			
-			labelImage.setEnabled(true);
-			labelImage.setVisible(true);
-			textFieldImage.setEnabled(true);
-			textFieldImage.setVisible(true);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(true);
-			labelChoixPOI.setVisible(true);
-			comboBoxChoixPOI.setEnabled(true);
-			comboBoxChoixPOI.setVisible(true);
-			buttonPlus.setEnabled(true);
-			buttonPlus.setVisible(true);
-			
-			btnRemove.setEnabled(true);
-			btnRemove.setVisible(true);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("PARCOURS - MODIFICATION", true,true,true,true,true,true,true,true,false,false,false,false,false,false,true,true,true,true,true,true, false);
 			break;
 		case "23": //PARCOURS - DELETE
-			labelTypeEDIT.setText("PARCOURS - SUPPRESSION");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(true);
-			labelSecondComboBox.setVisible(true);
-			comboBoxSecond.setEnabled(true);
-			comboBoxSecond.setVisible(true);
-			
-			labelLibelle.setEnabled(false);
-			labelLibelle.setVisible(false);
-			textFieldLibelle.setEnabled(false);
-			textFieldLibelle.setVisible(false);
-			
-			labelDescription.setEnabled(false);
-			labelDescription.setVisible(false);
-			textFieldDescription.setEnabled(false);
-			textFieldDescription.setVisible(false);
-			
-			labelImage.setEnabled(false);
-			labelImage.setVisible(false);
-			textFieldImage.setEnabled(false);
-			textFieldImage.setVisible(false);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("PARCOURS - SUPPRESSION", true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false);
 			break;
 		case "31": //POI - ADD
-			labelTypeEDIT.setText("POI - AJOUT");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(true);
-			labelLibelle.setVisible(true);
-			textFieldLibelle.setEnabled(true);
-			textFieldLibelle.setVisible(true);
-			
-			labelDescription.setEnabled(true);
-			labelDescription.setVisible(true);
-			textFieldDescription.setEnabled(true);
-			textFieldDescription.setVisible(true);
-			
-			labelImage.setEnabled(true);
-			labelImage.setVisible(true);
-			textFieldImage.setEnabled(true);
-			textFieldImage.setVisible(true);
-			
-			btnPosition.setEnabled(true);
-			btnPosition.setVisible(true);
-			labelPosX.setEnabled(true);
-			labelPosX.setVisible(true);
-			labelSeparator.setEnabled(true);
-			labelSeparator.setVisible(true);
-			labelPosY.setEnabled(true);
-			labelPosY.setVisible(true);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("POI - AJOUT", true,true,false,false,true,true,true,true,true,true,true,true,false,false,false,false,false,false,true,true, true);
 			break;
 		case "32": //POI - MODIF
-			labelTypeEDIT.setText("POI - MODIFICATION");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(true);
-			labelSecondComboBox.setVisible(true);
-			comboBoxSecond.setEnabled(true);
-			comboBoxSecond.setVisible(true);
-			
-			labelLibelle.setEnabled(true);
-			labelLibelle.setVisible(true);
-			textFieldLibelle.setEnabled(true);
-			textFieldLibelle.setVisible(true);
-			
-			labelDescription.setEnabled(true);
-			labelDescription.setVisible(true);
-			textFieldDescription.setEnabled(true);
-			textFieldDescription.setVisible(true);
-			
-			labelImage.setEnabled(true);
-			labelImage.setVisible(true);
-			textFieldImage.setEnabled(true);
-			textFieldImage.setVisible(true);
-			
-			btnPosition.setEnabled(true);
-			btnPosition.setVisible(true);
-			labelPosX.setEnabled(true);
-			labelPosX.setVisible(true);
-			labelSeparator.setEnabled(true);
-			labelSeparator.setVisible(true);
-			labelPosY.setEnabled(true);
-			labelPosY.setVisible(true);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("POI - MODIFICATION", true,true,true,true,true,true,true,true,true,true,true,true,true,true,false,false,false,false,true,true, true);
 			break;
 		case "33": //POI - DELETE
-			labelTypeEDIT.setText("POI - SUPPRESSION");
-			labelFirstCombobox.setEnabled(true);
-			labelFirstCombobox.setVisible(true);
-			comboBoxFirst.setEnabled(true);
-			comboBoxFirst.setVisible(true);
-			
-			labelSecondComboBox.setEnabled(true);
-			labelSecondComboBox.setVisible(true);
-			comboBoxSecond.setEnabled(true);
-			comboBoxSecond.setVisible(true);
-			
-			labelLibelle.setEnabled(false);
-			labelLibelle.setVisible(false);
-			textFieldLibelle.setEnabled(false);
-			textFieldLibelle.setVisible(false);
-			
-			labelDescription.setEnabled(false);
-			labelDescription.setVisible(false);
-			textFieldDescription.setEnabled(false);
-			textFieldDescription.setVisible(false);
-			
-			labelImage.setEnabled(false);
-			labelImage.setVisible(false);
-			textFieldImage.setEnabled(false);
-			textFieldImage.setVisible(false);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			
-			buttonValidate.setEnabled(true);
-			buttonValidate.setVisible(true);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("POI - SUPPRESSION", true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false);
 			break;
 		case "99":
-			labelFirstCombobox.setEnabled(false);
-			labelFirstCombobox.setVisible(false);
-			comboBoxFirst.setEnabled(false);
-			comboBoxFirst.setVisible(false);
-			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(false);
-			labelLibelle.setVisible(false);
-			textFieldLibelle.setEnabled(false);
-			textFieldLibelle.setVisible(false);
-			
-			labelDescription.setEnabled(false);
-			labelDescription.setVisible(false);
-			textFieldDescription.setEnabled(false);
-			textFieldDescription.setVisible(false);
-			
-			labelImage.setEnabled(false);
-			labelImage.setVisible(false);
-			textFieldImage.setEnabled(false);
-			textFieldImage.setVisible(false);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			
-			buttonValidate.setEnabled(false);
-			buttonValidate.setVisible(false);
-			buttonCancel.setEnabled(false);
-			buttonCancel.setVisible(false);
-		break;
+			setButtonAction(false);
+			setEtatComponent("EDITION", false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false, false);
+		
+			break;
 		case "90":
-			labelFirstCombobox.setEnabled(false);
-			labelFirstCombobox.setVisible(false);
-			comboBoxFirst.setEnabled(false);
-			comboBoxFirst.setVisible(false);
 			
-			labelSecondComboBox.setEnabled(false);
-			labelSecondComboBox.setVisible(false);
-			comboBoxSecond.setEnabled(false);
-			comboBoxSecond.setVisible(false);
-			
-			labelLibelle.setEnabled(false);
-			labelLibelle.setVisible(false);
-			textFieldLibelle.setEnabled(false);
-			textFieldLibelle.setVisible(false);
-			
-			labelDescription.setEnabled(false);
-			labelDescription.setVisible(false);
-			textFieldDescription.setEnabled(false);
-			textFieldDescription.setVisible(false);
-			
-			labelImage.setEnabled(false);
-			labelImage.setVisible(false);
-			textFieldImage.setEnabled(false);
-			textFieldImage.setVisible(false);
-			
-			btnPosition.setEnabled(false);
-			btnPosition.setVisible(false);
-			labelPosX.setEnabled(false);
-			labelPosX.setVisible(false);
-			labelSeparator.setEnabled(false);
-			labelSeparator.setVisible(false);
-			labelPosY.setEnabled(false);
-			labelPosY.setVisible(false);
-			
-			labelChoixPOI.setEnabled(false);
-			labelChoixPOI.setVisible(false);
-			comboBoxChoixPOI.setEnabled(false);
-			comboBoxChoixPOI.setVisible(false);
-			buttonPlus.setEnabled(false);
-			buttonPlus.setVisible(false);
-			
-			btnRemove.setEnabled(false);
-			btnRemove.setVisible(false);
-			
-			buttonValidate.setEnabled(false);
-			buttonValidate.setVisible(false);
-			buttonCancel.setEnabled(true);
-			buttonCancel.setVisible(true);
+			setEtatComponent("EDITION", false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true, false);
 		break;
 		
 		}
@@ -888,6 +439,10 @@ public class MyJFrame extends JFrame {
 		textFieldImage = new JTextField();
 		textFieldImage.setColumns(10);
 		panelEditTextBoxImage.add(textFieldImage);
+		
+		btnSearchImage = new JButton("Search");
+		
+		panelEditTextBoxImage.add(btnSearchImage);
 		
 		JPanel panelEditPosition = new JPanel();
 		panelEditPart.add(panelEditPosition);
@@ -1184,7 +739,18 @@ public class MyJFrame extends JFrame {
 			}
 		});
 		
-		
+		btnSearchImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setCurrentDirectory(new File("."));
+				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				chooser.showOpenDialog(null);
+				File selectedPfile = chooser.getSelectedFile();
+				System.out.println(selectedPfile.getAbsolutePath());
+				pathFound = selectedPfile.getAbsolutePath();
+				textFieldImage.setText(selectedPfile.getAbsolutePath());
+			}
+		});
 		
 		
 	}
