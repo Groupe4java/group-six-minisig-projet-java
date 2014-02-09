@@ -6,10 +6,12 @@ public class MapPoi {
 		return "INSERT INTO tb_poi(Libelle_POI, Description_POI, X_POI, Y_POI, NombreClic_POI, ID_Lieu) VALUES(?, ?, ?, ?, ?, ?)";
 	}
 	public String mapRemovePoi(){
-		return "DELETE FROM tb_poi WHERE Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ?";
+		return "DELETE FROM tb_poi WHERE Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ? AND NombreClic_POI = ? AND ID_Lieu = ?";
 	}
 	public String mapUpdatePoi(){
-		return "UPDATE tb_poi SET Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ? WHERE Libelle_POI = ? AND Description_POI = ? AND X_POI = ? AND Y_POI = ?, NombreClic_POI = ?, ID_Lieu = ?";
+		return "UPDATE tb_poi SET Libelle_POI = ? , Description_POI = ? , Image_POI = ? , X_POI = ? , Y_POI = ? "
+				+ ", NombreClic_POI = ? , ID_Lieu = ? WHERE Libelle_POI = ? AND Description_POI = ? AND Image_POI = ? AND X_POI = ? AND Y_POI = ? AND NombreClic_POI = ? "
+				+ "AND ID_Lieu = ?";
 	}
 	public String mapSelectPoi(){
 		return "SELECT * FROM tb_poi WHERE ID_POI = ?";
@@ -19,5 +21,8 @@ public class MapPoi {
 	}
 	public String mapGetExistencePoiInParcours(){
 		return "SELECT * FROM fait_partie WHERE ID_Parcours = ? AND ID_POI = ?";
+	}
+	public String mapGetIdForNamePoi(){
+		return "SELECT ID_POI FROM tb_poi WHERE Libelle_POI = ?";
 	}
 }

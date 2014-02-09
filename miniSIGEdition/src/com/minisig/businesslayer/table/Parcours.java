@@ -13,6 +13,15 @@ public class Parcours {
 		this.descriptionParcours = descriptionParcours;
 		this.idLieu = idLieu;
 	}
+	
+	public Parcours(int idParcours, String libelleParcours, String descriptionParcours,
+			int idLieu) {
+		this.idParcours = idParcours;
+		this.libelleParcours = libelleParcours;
+		this.descriptionParcours = descriptionParcours;
+		this.idLieu = idLieu;
+	}
+	
 	public int getIdParcours() {
 		return idParcours;
 	}

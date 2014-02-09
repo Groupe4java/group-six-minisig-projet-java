@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -26,6 +27,22 @@ public class MyJPanelMap extends JPanel {
 	int nombrePOI;
 	int originWidht = 426;
 	int originHeight = 457;
+	int currentWidth;
+	public void setCurrentWidth(int currentWidth) {
+		this.currentWidth = currentWidth;
+	}
+	public void setCurrentHeight(int currentHeight) {
+		this.currentHeight = currentHeight;
+	}
+
+	int currentHeight;
+	public int getCurrentWidth() {
+		return currentWidth;
+	}
+	public int getCurrentHeight() {
+		return currentHeight;
+	}
+
 	Graphics2D g2d;
 	public Graphics2D getG2d() {
 		return g2d;
@@ -106,6 +123,8 @@ public class MyJPanelMap extends JPanel {
 	//PARTIE DRAW
 	public void paintComponent(Graphics g){
 		g2d = (Graphics2D) g;
+		setCurrentWidth(getWidth());
+		setCurrentHeight(getHeight());
 		try 
 		{
 			if(mapLieu != null){

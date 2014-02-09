@@ -23,13 +23,17 @@ import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -58,12 +62,22 @@ public class MyJFrame extends JFrame {
 	JButton btnPrevious;
 	JButton btnNext;
 	JButton btnRemove;
-	String absolutePathPOI = null;
-	
+	String absolutePathImageToShow = null;
+	JList jlistPOI;
+	JScrollPane listScrollerPOI;
+	DefaultListModel model;
+	List<String> listPoiIntoParcours = new ArrayList<>();
+	int largeurPanelMap;
+	public void setLargeurPanelMap(int largeurPanelMap) {
+		this.largeurPanelMap = largeurPanelMap;
+	}
+
+	int hauteurPanelMap;
+	boolean positioningPOI = false;
 	
 	//CONSULTATION
 	
-	String imagePOI = null;
+	String imageToShow = null;
 	//EDITION
 	JLabel lblTypeEDIT;
 	
@@ -97,6 +111,10 @@ public class MyJFrame extends JFrame {
 	
 	int typeSelected;		//1 = Lieu, 2 = Parcours, 3 = POI
 	int actionSelected;		//1 = ADD, 2 = MODIF, 3 = DELETE
+
+	public void setActionSelected(int actionSelected) {
+		this.actionSelected = actionSelected;
+	}
 
 	int originWidht = 512;
 	int originHeight = 408;
@@ -146,7 +164,7 @@ public class MyJFrame extends JFrame {
 			boolean bLblDescription, boolean bTFDescription, boolean bLblImage, boolean bTFImage,
 			boolean bBtnPosition, boolean bLblPosX, boolean bLblSeparator, boolean bLblposY, 
 			boolean bLblChoixPOI, boolean bComboBoxChoixPOI, boolean bBtnPlus,
-			boolean bBtnRemove, boolean bBtnValidate, boolean bBtnCancel, boolean bBtnSearchImage)
+			boolean bBtnRemove, boolean bBtnValidate, boolean bBtnCancel, boolean bBtnSearchImage, boolean bListScrollerPOI)
 	{
 		lblTypeEDIT.setText(textTitle);
 		lblFirstCombobox.setEnabled(bLblFirstCombobox);
@@ -193,6 +211,9 @@ public class MyJFrame extends JFrame {
 		btnPlus.setEnabled(bBtnPlus);
 		btnPlus.setVisible(bBtnPlus);
 		
+		listScrollerPOI.setEnabled(bListScrollerPOI);
+		listScrollerPOI.setVisible(bListScrollerPOI);
+		
 		btnRemove.setEnabled(bBtnRemove);
 		btnRemove.setVisible(bBtnRemove);
 		btnValidate.setEnabled(bBtnValidate);
@@ -201,6 +222,70 @@ public class MyJFrame extends JFrame {
 		btnCancel.setVisible(bBtnCancel);
 	}
 	
+	public void setEtatComponent(String textTitle, boolean bLblFirstCombobox, boolean bFirstCombobox,
+			boolean bLblSecondCombobox, boolean bSecondCombobox, boolean bLblLibelle, boolean bTFLibelle, 
+			boolean bLblDescription, boolean bTFDescription, boolean bLblImage, boolean bTFImage,
+			boolean bBtnPosition, boolean bLblPosX, boolean bLblSeparator, boolean bLblposY, 
+			boolean bLblChoixPOI, boolean bComboBoxChoixPOI, boolean bBtnPlus,
+			boolean bBtnRemove, boolean bBtnValidate, boolean bBtnCancel, boolean bBtnSearchImage, String lblComboBoxSecond, boolean bListScrollerPOI)
+	{
+		lblTypeEDIT.setText(textTitle);
+		lblFirstCombobox.setEnabled(bLblFirstCombobox);
+		lblFirstCombobox.setVisible(bLblFirstCombobox);
+		comboBoxFirst.setEnabled(bFirstCombobox);
+		comboBoxFirst.setVisible(bFirstCombobox);
+		
+		lblSecondComboBox.setEnabled(bLblSecondCombobox);
+		lblSecondComboBox.setVisible(bLblSecondCombobox);
+		lblSecondComboBox.setText(lblComboBoxSecond);
+		comboBoxSecond.setEnabled(bSecondCombobox);
+		comboBoxSecond.setVisible(bSecondCombobox);
+		
+		lblLibelleEDIT.setEnabled(bLblLibelle);
+		lblLibelleEDIT.setVisible(bLblLibelle);
+		textFieldLibelle.setEnabled(bTFLibelle);
+		textFieldLibelle.setVisible(bTFLibelle);
+		
+		lblDescriptionEDIT.setEnabled(bLblDescription);
+		lblDescriptionEDIT.setVisible(bLblDescription);
+		textFieldDescription.setEnabled(bTFDescription);
+		textFieldDescription.setVisible(bTFDescription);
+		
+		lblImageEDIT.setEnabled(bLblImage);
+		lblImageEDIT.setVisible(bLblImage);
+		textFieldImage.setEnabled(bTFImage);
+		textFieldImage.setVisible(bTFImage);
+		
+		btnSearchImage.setEnabled(bBtnSearchImage);
+		btnSearchImage.setVisible(bBtnSearchImage);
+		
+		
+		btnPosition.setEnabled(bBtnPosition);
+		btnPosition.setVisible(bBtnPosition);
+		lblPosX.setEnabled(bLblPosX);
+		lblPosX.setVisible(bLblPosX);
+		lblSeparator.setEnabled(bLblSeparator);
+		lblSeparator.setVisible(bLblSeparator);
+		lblPosY.setEnabled(bLblposY);
+		lblPosY.setVisible(bLblposY);
+		
+		lblChoixPOI.setEnabled(bLblChoixPOI);
+		lblChoixPOI.setVisible(bLblChoixPOI);
+		comboBoxChoixPOI.setEnabled(bComboBoxChoixPOI);
+		comboBoxChoixPOI.setVisible(bComboBoxChoixPOI);
+		btnPlus.setEnabled(bBtnPlus);
+		btnPlus.setVisible(bBtnPlus);
+		listScrollerPOI.setEnabled(bListScrollerPOI);
+		listScrollerPOI.setVisible(bListScrollerPOI);
+		btnRemove.setEnabled(bBtnRemove);
+		btnRemove.setVisible(bBtnRemove);
+		btnValidate.setEnabled(bBtnValidate);
+		btnValidate.setVisible(bBtnValidate);
+		btnCancel.setEnabled(bBtnCancel);
+		btnCancel.setVisible(bBtnCancel);
+	}
+
+	
 	public void setEtatEditComponent(String actionSelected, String typeSelected) {//GERE L'AFFICHAGE DES ELEMENTS EDITIONS
 		String action = actionSelected + typeSelected;
 		System.out.println(action);
@@ -208,40 +293,40 @@ public class MyJFrame extends JFrame {
 		switch(action)
 		{
 		case "11": //LIEU - ADD
-			setEtatComponent("LIEU - AJOUT", false,false,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false,false,true,true, true);
+			setEtatComponent("LIEU - AJOUT", false,false,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false,false,true,true, true, false);
 			break;
 		case "12": //LIEU - MODIF
-			setEtatComponent("LIEU - MODIFICATION", true,true,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false,false,true,true, true);
+			setEtatComponent("LIEU - MODIFICATION", true,true,false,false,true,true,true,true,true,true,false,false,false,false,false,false,false,false,true,true, true, false);
 			break;
 		case "13": //LIEU - DELETE
-			setEtatComponent("LIEU - SUPPRESSION", true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false);
+			setEtatComponent("LIEU - SUPPRESSION", true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false, false);
 			break;
 		case "21": //PARCOURS - ADD
-			setEtatComponent("PARCOURS - AJOUT", true,true,false,false,true,true,true,true,false,false,false,false,false,false,true,true,true,true,true,true, false);
+			setEtatComponent("PARCOURS - AJOUT", true,true,false,false,true,true,true,true,false,false,false,false,false,false,true,true,true,true,true,true, false, true);
 			break;
 		case "22": //PARCOURS - MODIF
-			setEtatComponent("PARCOURS - MODIFICATION", true,true,true,true,true,true,true,true,false,false,false,false,false,false,true,true,true,true,true,true, false);
+			setEtatComponent("PARCOURS - MODIFICATION", true,true,true,true,true,true,true,true,false,false,false,false,false,false,true,true,true,true,true,true, false,  "Choix Parcours : ",true);
 			break;
 		case "23": //PARCOURS - DELETE
-			setEtatComponent("PARCOURS - SUPPRESSION", true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false);
+			setEtatComponent("PARCOURS - SUPPRESSION", true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false, false);
 			break;
 		case "31": //POI - ADD
-			setEtatComponent("POI - AJOUT", true,true,false,false,true,true,true,true,true,true,true,true,false,false,false,false,false,false,true,true, true);
+			setEtatComponent("POI - AJOUT", true,true,false,false,true,true,true,true,true,true,true,true,true,true,false,false,false,false,true,true, true, false);
 			break;
 		case "32": //POI - MODIF
-			setEtatComponent("POI - MODIFICATION", true,true,true,true,true,true,true,true,true,true,true,true,true,true,false,false,false,false,true,true, true);
+			setEtatComponent("POI - MODIFICATION", true,true,true,true,true,true,true,true,true,true,true,true,true,true,false,false,false,false,true,true, true, "Choix POI : ", false);
 			break;
 		case "33": //POI - DELETE
-			setEtatComponent("POI - SUPPRESSION", true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false);
+			setEtatComponent("POI - SUPPRESSION", true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true, false, false);
 			break;
 		case "99":
 			setButtonAction(false);
-			setEtatComponent("EDITION", false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false, false);
+			setEtatComponent("EDITION", false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false, false, false);
 		
 			break;
 		case "90":
 			
-			setEtatComponent("EDITION", false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true, false);
+			setEtatComponent("EDITION", false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true, false, false);
 		break;
 		
 		}
@@ -254,6 +339,74 @@ public class MyJFrame extends JFrame {
 		btnDELETE.setEnabled(etat);
 	}
 	
+	
+	public void refreshComboBoxLieu()
+	{
+		List<Lieu> listLieu = null;
+		LieuProcessus lieuProc = new LieuProcessus();
+		listLieu = lieuProc.ListAllLieu();
+		comboBoxLieu.removeAllItems();
+		comboBoxLieu.addItem("");
+		for(Lieu e : listLieu)comboBoxLieu.addItem(e.getNameLieu());
+	}
+	
+	public void refreshComboBoxFirst()
+	{
+		List<Lieu> listLieu = null;
+		LieuProcessus lieuProc = new LieuProcessus();
+		listLieu = lieuProc.ListAllLieu();
+		comboBoxFirst.removeAllItems();
+		comboBoxFirst.addItem("");
+		for(Lieu e : listLieu)comboBoxFirst.addItem(e.getNameLieu());
+	}
+	
+	public void refreshComboBoxSecondPOI(int idLieu)
+	{
+		List<Poi> listPoi = null;
+		PoiProcessus poiProc = new PoiProcessus();
+		listPoi = poiProc.listAllPoiForLieu(idLieu);
+		comboBoxSecond.removeAllItems();
+		comboBoxSecond.addItem("");
+		for(Poi p : listPoi)comboBoxSecond.addItem(p.getLibellePOI());
+	}
+	
+	public void refreshComboBoxSecondParcours(int idLieu)
+	{
+		List<Parcours> listParcours = null;
+		ParcoursProcessus parcoursProc = new ParcoursProcessus();
+		listParcours = parcoursProc.ListAllParcoursOfLieu(idLieu);
+		comboBoxSecond.removeAllItems();
+		comboBoxSecond.addItem("");
+		for(Parcours p : listParcours)comboBoxSecond.addItem(p.getLibelleParcours());
+	}
+	
+	public void refreshComboBoxChoixPOI(int idLieu)
+	{
+		List<Poi> listPoi = null;
+		PoiProcessus poiProc = new PoiProcessus();
+		listPoi = poiProc.listAllPoiForLieu(idLieu);
+		comboBoxChoixPOI.removeAllItems();
+		comboBoxChoixPOI.addItem("");
+		for(Poi p : listPoi)comboBoxChoixPOI.addItem(p.getLibellePOI());
+	}
+	
+	public void refreshComboBoxChoixPOIfromParcours(int idParcours)
+	{
+		List<Poi> listPoi = null;
+		PoiProcessus poiProc = new PoiProcessus();
+		listPoi = poiProc.
+		//comboBoxChoixPOI.removeAllItems();
+		//comboBoxChoixPOI.addItem("");
+		//for(Poi p : listPoi)comboBoxChoixPOI.addItem(p.getLibellePOI());
+	}
+	
+	
+	public void resetTextFieldEDIT()
+	{
+		textFieldLibelle.setText("");
+		textFieldDescription.setText("");
+		textFieldImage.setText("");
+	}
 	public void newComponents()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -334,9 +487,9 @@ public class MyJFrame extends JFrame {
 			public void paintComponent(Graphics g){
 				try 
 				{
-					imagePOI = absolutePathPOI;
-					if(imagePOI != null){
-					Image img = ImageIO.read(new File(imagePOI));
+					imageToShow = absolutePathImageToShow;
+					if(imageToShow != null){
+					Image img = ImageIO.read(new File(imageToShow));
 					g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
 					} 
 				}
@@ -498,6 +651,18 @@ public class MyJFrame extends JFrame {
 		JPanel panelEditListPOI = new JPanel();
 		panelEditPart.add(panelEditListPOI);
 		
+		model = new DefaultListModel();
+		
+		jlistPOI = new JList(model);
+		jlistPOI.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jlistPOI.setLayoutOrientation(JList.VERTICAL);
+		jlistPOI.setVisibleRowCount(-1);
+		//jlistPOI.setPreferredSize(new Dimension(100, 50));
+		
+		listScrollerPOI = new JScrollPane(jlistPOI);
+		listScrollerPOI.setPreferredSize(new Dimension(130, 60));
+		
+		panelEditListPOI.add(listScrollerPOI);
 		
 		btnRemove = new JButton("REMOVE");
 		panelEditListPOI.add(btnRemove);
@@ -539,11 +704,7 @@ public class MyJFrame extends JFrame {
 		comboBoxLieu.setModel(new DefaultComboBoxModel(new String[] {""}));
 		panelMenu.add(comboBoxLieu);
 		
-		List<Lieu> listLieu = null;
-		LieuProcessus lieuProc = new LieuProcessus();
-		listLieu = lieuProc.ListAllLieu();
-		for(Lieu e : listLieu)comboBoxLieu.addItem(e.getNameLieu());
-		
+		refreshComboBoxLieu();
 		
 		btnGoLieu = new JButton("Go");
 		
@@ -651,7 +812,7 @@ public class MyJFrame extends JFrame {
 				
 				comboBoxParcours.removeAllItems();
 				List<Parcours> listParcours = null;
-				listParcours = lieuProc.ListAllParcoursOfLieu(comboBoxLieu.getSelectedItem().toString());
+				listParcours = lieuProc.ListAllParcoursOfLieu(lieuProc.getIdForNameLieu(comboBoxLieu.getSelectedItem().toString()));
 				for(Parcours e: listParcours) comboBoxParcours.addItem(e.getLibelleParcours());
 				((MyJPanelMap) panelMAP).setMapLieu(lieuProc.getImageForLieu(comboBoxLieu.getSelectedItem().toString()));
 
@@ -680,22 +841,40 @@ public class MyJFrame extends JFrame {
 	//LISTENERS - MouseClicked on MAP
 		panelMAP.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				ArrayList<Ellipse2D> listOval = new ArrayList<>();
-				listOval = ((MyJPanelMap) panelMAP).getListOval();
-				
-
-				for(int i = 0; i < listX.size(); i++)
+				if(positioningPOI != true)
 				{
-					if ((e.getButton() == 1) && listOval.get(i).contains(e.getX(), e.getY()))
+					ArrayList<Ellipse2D> listOval = new ArrayList<>();
+					listOval = ((MyJPanelMap) panelMAP).getListOval();
+					
+
+					for(int i = 0; i < listX.size(); i++)
 					{
-						System.out.println(listDescriptionPoi.get(i));
-						System.out.println(listNamePoi.get(i));
-						lblLibellePOI.setText(listNamePoi.get(i));
-						lblDescriptionPOI.setText(listDescriptionPoi.get(i));
-						absolutePathPOI = listImagePoi.get(i);
-						repaint();
+						if ((e.getButton() == 1) && listOval.get(i).contains(e.getX(), e.getY()))
+						{
+							lblLibellePOI.setText(listNamePoi.get(i));
+							lblDescriptionPOI.setText(listDescriptionPoi.get(i));
+							absolutePathImageToShow = listImagePoi.get(i);
+							repaint();
+						}
 					}
+				} else if (positioningPOI != false)
+				{
+					int originW = 426;
+					int originH = 457;
+					double currentW = ((MyJPanelMap) panelMAP).getCurrentWidth();
+					double currentH = ((MyJPanelMap) panelMAP).getCurrentHeight();
+					int posSourisX = e.getX();
+					int posSourisY = e.getY();
+					double division = currentW/originW;
+					double posNewX = posSourisX / division;
+					double posNewY = posSourisY / division;
+					int posNewXInt = (int)posNewX;
+					int posNewYInt = (int)posNewY;
+					//System.out.println(""+e.getX()+" x "+currentW+" / "+originW);
+					lblPosX.setText(Integer.toString(posNewXInt));
+					lblPosY.setText(Integer.toString(posNewYInt));
 				}
+				
 			}
 		});
 		
@@ -732,18 +911,26 @@ public class MyJFrame extends JFrame {
 		//Choix de l'action d'Edition
 		btnADD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(1));
+				resetTextFieldEDIT();
+				setActionSelected(1);
+				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(actionSelected));
+				refreshComboBoxFirst();
 			}
 		});
 		btnMODIF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(2));
-				
+				resetTextFieldEDIT();
+				setActionSelected(2);
+				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(actionSelected));
+				refreshComboBoxFirst();
 			}
 		});
 		btnDELETE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(3));
+				resetTextFieldEDIT();
+				setActionSelected(3);
+				setEtatEditComponent(Integer.toString(typeSelected), Integer.toString(actionSelected));
+				refreshComboBoxFirst();
 			}
 		});
 		
@@ -754,19 +941,183 @@ public class MyJFrame extends JFrame {
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				chooser.showOpenDialog(null);
 				File selectedPfile = chooser.getSelectedFile();
-				System.out.println(selectedPfile.getAbsolutePath());
-				absolutePathPOI = selectedPfile.getAbsolutePath();
+				absolutePathImageToShow = selectedPfile.getAbsolutePath();
 				textFieldImage.setText(selectedPfile.getAbsolutePath());
 			}
 		});
 		
-		
-		
-		btnValidate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		// Bouton POSITION
+		btnPosition.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(positioningPOI == false)
+				{
+					positioningPOI = true;
+					btnPosition.setText("POSITION - ON");
+				}else{
+					positioningPOI = false;
+					btnPosition.setText("POSITION - OFF");
+				}
+				
 				
 			}
 		});
+		
+		//BOUTON +
+				btnPlus.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						model.addElement(comboBoxChoixPOI.getSelectedItem());
+						
+					}
+				});
+				
+		//BOUTON REMOVE
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selectedIndex = jlistPOI.getSelectedIndex();
+				if (selectedIndex != -1) {
+				model.remove(selectedIndex);
+				}
+			}
+		});
+		
+		comboBoxFirst.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(comboBoxFirst.getSelectedItem() != "" && comboBoxFirst.getSelectedItem() !=null)
+				{
+					String action = Integer.toString(typeSelected) + Integer.toString(actionSelected);
+					
+					LieuProcessus lieuProc = new LieuProcessus();
+					ParcoursProcessus parcoursProc = new ParcoursProcessus();
+
+					if(action.equals("12"))
+					{
+						Lieu lieuSelected = lieuProc.getObject(lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+						textFieldLibelle.setText(lieuSelected.getNameLieu());
+						textFieldDescription.setText(lieuSelected.getDescriptionLieu());
+						textFieldImage.setText(lieuSelected.getImageUrlLieu());
+					
+					}
+					if(action.equals("21"))
+					{
+						
+						refreshComboBoxChoixPOI(lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+					}
+					if(action.equals("22") || action.equals("23"))
+					{
+						System.out.println("YOOOOOOOOo");
+						refreshComboBoxSecondParcours(lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+					}
+					
+					if(action.equals("32") || action.equals("33"))
+					{
+						refreshComboBoxSecondPOI(lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+					}
+					
+				}
+				
+			}
+		});
+		
+		comboBoxSecond.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				String action = Integer.toString(typeSelected) + Integer.toString(actionSelected);
+
+				if(comboBoxSecond.getSelectedItem() != "" && comboBoxSecond.getSelectedItem() !=null)
+				{
+					if(action.equals("22"))
+					{
+						ParcoursProcessus parcoursProc = new ParcoursProcessus();
+						Parcours parcoursSelected = parcoursProc.selectParcours(parcoursProc.getIdForNameParcours(comboBoxSecond.getSelectedItem().toString()));
+							textFieldLibelle.setText(parcoursSelected.getLibelleParcours());
+							textFieldDescription.setText(parcoursSelected.getDescriptionParcours());
+							refreshComboBoxChoixPOIfromParcours(parcoursProc.getIdForNameParcours(comboBoxSecond.getSelectedItem().toString()));
+
+					}
+					
+					if(action.equals("32"))
+					{
+						PoiProcessus poiProc = new PoiProcessus();
+						Poi poiSelected = poiProc.selectPoi(poiProc.getIdForNamePoi(comboBoxSecond.getSelectedItem().toString()));
+							textFieldLibelle.setText(poiSelected.getLibellePOI());
+							textFieldDescription.setText(poiSelected.getDescriptionPOI());
+							textFieldImage.setText(poiSelected.getImagePOI());
+							lblPosX.setText(Integer.toString(poiSelected.getXPOI()));
+							lblPosY.setText(Integer.toString(poiSelected.getYPOI()));
+						
+					}
+				
+				}
+			}
+		});
+		
+		btnValidate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String action = Integer.toString(typeSelected) + Integer.toString(actionSelected);
+				System.out.println(action);
+				LieuProcessus lieuProc = new LieuProcessus();
+				ParcoursProcessus parcoursProc= new ParcoursProcessus();
+				PoiProcessus poiProc = new PoiProcessus();
+				switch(action)
+				{
+				case "11": //LIEU - ADD
+					lieuProc.addLieu(textFieldLibelle.getText(), textFieldDescription.getText(), textFieldImage.getText());
+					refreshComboBoxLieu();
+					break;
+				case "12": //LIEU - MODIF
+					lieuProc.updateLieu(lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()), textFieldLibelle.getText(), textFieldDescription.getText(), textFieldImage.getText());
+					refreshComboBoxLieu();
+					refreshComboBoxFirst();
+					break;
+				case "13": //LIEU - DELETE
+					lieuProc.removeLieu(comboBoxFirst.getSelectedItem().toString(), lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+					refreshComboBoxLieu();
+					refreshComboBoxFirst();
+					break;
+				case "21": //PARCOURS - ADD
+					listPoiIntoParcours.removeAll(listPoiIntoParcours);
+					for (int i = 0; i < jlistPOI.getModel().getSize(); i++) {
+						System.out.println("i="+i);
+						System.out.println(jlistPOI.getModel().getElementAt(i).toString());
+						listPoiIntoParcours.add(jlistPOI.getModel().getElementAt(i).toString());
+					}
+					parcoursProc.addParcours(textFieldLibelle.getText(), textFieldDescription.getText(), lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()), listPoiIntoParcours);
+					break;
+				case "22": //PARCOURS - MODIF
+					listPoiIntoParcours.removeAll(listPoiIntoParcours);
+					for (int i = 0; i < jlistPOI.getModel().getSize(); i++) {
+						System.out.println("i="+i);
+						System.out.println(jlistPOI.getModel().getElementAt(i).toString());
+						listPoiIntoParcours.add(jlistPOI.getModel().getElementAt(i).toString());
+					}
+					parcoursProc.updateParcours(comboBoxSecond.getSelectedItem().toString(), textFieldLibelle.getText(), textFieldDescription.getText(), lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()), listPoiIntoParcours);
+					
+					break;
+				case "23": //PARCOURS - DELETE
+					
+					parcoursProc.removeParcours(comboBoxSecond.getSelectedItem().toString());
+					
+					break;
+				case "31": //POI - ADD
+					poiProc.addPoi(textFieldLibelle.getText(), textFieldDescription.getText(), textFieldImage.getText(), Integer.parseInt(lblPosX.getText()), Integer.parseInt(lblPosY.getText()), 0, lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+					break;
+				case "32": //POI - MODIF
+					poiProc.updatePoi(poiProc.getIdForNamePoi(comboBoxSecond.getSelectedItem().toString()), textFieldLibelle.getText(), 
+							textFieldDescription.getText(), textFieldImage.getText(), Integer.parseInt(lblPosX.getText()), 
+							Integer.parseInt(lblPosY.getText()), 0, lieuProc.getIdForNameLieu(comboBoxFirst.getSelectedItem().toString()));
+					repaint();
+					break;
+				case "33": //POI - DELETE
+					
+					poiProc.removePoi(poiProc.getIdForNamePoi(comboBoxSecond.getSelectedItem().toString()));
+					
+					break;
+				case "99":
+				
+					break;
+				case "90":
+				break;
+			}
+			}});
 		
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
